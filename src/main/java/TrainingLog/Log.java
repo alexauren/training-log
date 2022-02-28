@@ -1,4 +1,4 @@
-package TrainingLog;
+package traininglog;
 
 import java.util.ArrayList;
 import java.util.Collection;

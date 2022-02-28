@@ -1,4 +1,4 @@
-package TrainingLog;
+package traininglog;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,4 +64,8 @@ public class Workout {
         return this.time;
     }
 
+    @Override
+    public String toString() {
+        return this.name + ", Date: " + this.date;
+    }
 }

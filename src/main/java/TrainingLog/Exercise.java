@@ -1,4 +1,4 @@
-package TrainingLog;
+package traininglog;
 
 public class Exercise {
     
@@ -48,4 +48,8 @@ public class Exercise {
         return this.intensity;
     }
 
+    @Override
+    public String toString() {
+        return "Exercise: " + this.name + ", Type: " + this.type + ", Time: " + this.time + ", Intensity: " + this.intensity;
+    }
 }
