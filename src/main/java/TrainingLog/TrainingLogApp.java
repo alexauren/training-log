@@ -3,6 +3,7 @@ package traininglog;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,8 +18,8 @@ public class TrainingLogApp extends Application {
     @Override
 	public void start(final Stage primaryStage) throws IOException {
 		primaryStage.setTitle("Training log"); 
-		System.out.println(getClass().getResource("LogGUI.fxml"));
-		primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("LogGUI.fxml"))));
+		Parent parent = FXMLLoader.load(getClass().getResource("LogGUI.fxml"));
+		primaryStage.setScene(new Scene(parent));
 		primaryStage.show();
 	}
 	

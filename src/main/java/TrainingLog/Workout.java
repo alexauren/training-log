@@ -23,11 +23,11 @@ public class Workout {
         if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 31) {
             return false;
         }
-        String month = date.substring(2,4);
+        String month = date.substring(3,5);
         if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 12) {
             return false;
         }
-        String year = date.substring(4,8);
+        String year = date.substring(6,10);
         if (Integer.parseInt(year) < 0 || Integer.parseInt(day) > 2022) {
             return false;
         }
@@ -39,11 +39,11 @@ public class Workout {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getDate() {
-        return this.date;
+        return date;
     }
 
     public void addExercise(Exercise exercise) {
@@ -59,13 +59,13 @@ public class Workout {
 
     public int getTime() {
         for (Exercise exercise : exercises) {
-            this.time += exercise.getTime();
+            time += exercise.getTime();
         }
-        return this.time;
+        return time;
     }
 
     @Override
     public String toString() {
-        return this.name + ", Date: " + this.date;
+        return name + ", Date: " + date;
     }
 }

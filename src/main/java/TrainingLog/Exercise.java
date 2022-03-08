@@ -3,14 +3,12 @@ package traininglog;
 public class Exercise {
     
     private String name;
-    private char type; 
     private int time;
     private int intensity;
     
-    public Exercise(String name, char type, int time, int intensity) {
+    public Exercise(String name, int time, int intensity) {
         if (this.isValidExercise()) {
             this.name = name;
-            this.type = type;
             this.time = time;
             this.intensity = intensity;
         }
@@ -18,10 +16,7 @@ public class Exercise {
     }
 
     private boolean isValidExercise() {
-        if (type != 'E' || type != 'S') {
-           return false; 
-        }
-        else if (time <= 0 && time > 180) {
+        if (time <= 0 && time > 180) {
             return false;
         }
         else if (intensity <= 0 && intensity > 10) {
@@ -32,24 +27,20 @@ public class Exercise {
 
     
     public String getName() {
-        return this.name;
-    }
-    
-    public char getType() {
-        return this.type;
+        return name;
     }
 
     public int getTime() {
-        return this.time;
+        return time;
     }
 
     
     public int getIntensity() {
-        return this.intensity;
+        return intensity;
     }
 
     @Override
     public String toString() {
-        return "Exercise: " + this.name + ", Type: " + this.type + ", Time: " + this.time + ", Intensity: " + this.intensity;
+        return "Exercise: " + name + ", Time: " + time + ", Intensity: " + intensity;
     }
 }
