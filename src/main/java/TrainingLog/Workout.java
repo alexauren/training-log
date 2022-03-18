@@ -63,9 +63,29 @@ public class Workout {
         }
         return time;
     }
+    public Collection<Exercise> getExercises() {
+        return exercises;
+    }
 
     @Override
     public String toString() {
         return name + ", Date: " + date;
     }
+
+    public String extendedToString() {
+
+        String tmpExercises = new String();
+        for (Exercise exercise : exercises) {
+            tmpExercises += exercise.toString() + "\n";
+        }
+        String tmpString = new String(
+        "Name: " + name + ", " +
+        "Date: " + date + 
+        "\n\n" + tmpExercises + "\n" +
+        "Total time spent: " + time
+        );
+        
+        return tmpString;
+    }
+    
 }

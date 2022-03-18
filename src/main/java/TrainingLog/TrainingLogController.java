@@ -1,79 +1,79 @@
 package traininglog;
 
-import java.io.IOException;
-
-import javafx.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class TrainingLogController {
 
-    @FXML
+    @FXML 
     private ListView<Workout> workoutList;
     @FXML
-    private TextFlow workoutInfo;
+    private Button addWorkoutButton, removeWorkoutButton, saveTrainingLog, loadTrainingLog, addExercise, closeButton, saveButton;
     @FXML
-    private Button addWorkout, removeWorkout, saveTrainingLog, loadTrainingLog, addExercise, closeButton, saveButton;
-    @FXML
-    private Text totalTime;
+    private Text totalTime, workoutInfo, errorText;
     @FXML 
     private TextField title, date, exercise, intensity, time;
-    @FXML
-    private Stage stage;
-    @FXML
-    private Scene scene;
-    @FXML
-    private Parent root;
     @FXML 
-    private AnchorPane newWorkkoutBackground, logBackground;
+    private AnchorPane newWorkoutBackground, logBackground;
 
-    private Log log = new Log();
+    private Log log;
     private Workout workout;
+    private List<Workout> emptyList = new ArrayList<Workout>();
 
-
-    @FXML
-    public void updateView() {
-        totalTime.setText(log.getTotalTime());
-        workoutList.getItems().setAll(log.getWorkoutList());
+    @FXML 
+    public void initialize() {
+        log = new Log();
+        workoutInfo.setText("Click on a workout to see info.");
+        newWorkoutBackground.setVisible(false);
+        removeWorkoutButton.setDisable(true);
     }
 
     @FXML
-    public void handleAddWorkout(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("NewWorkout.FXML"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private void updateView() {
+        try {
+            totalTime.setText(log.getTotalTime());        
+            workoutList.getItems().setAll(log.getWorkoutList());
+        }
+        catch (Exception e) {
+            workoutList.getItems().setAll(emptyList);
+        }
+        
+        workout = null;
+        removeWorkoutButton.setDisable(true);
+        workoutInfo.setText(null);
     }
-    @FXML
-    public void handleCloseButton(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("LogGUI.FXML"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    } 
 
     @FXML
-    public void handleSaveWorkout(ActionEvent event) throws IOException {
-        log.addWorkout(workout);
-        root = FXMLLoader.load(getClass().getResource("LogGUI.FXML"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void handleAddWorkout() {
+        title.setText(null);
+        date.setText(null);
+        newWorkoutBackground.setVisible(true);
+        
+    }
+
+    @FXML
+    public void handleCloseButton() {
+        workout = null;
         updateView();
+        newWorkoutBackground.setVisible(false);
+        
     }
+
+    @FXML
+    public void handleSaveWorkout() {
+        log.addWorkout(workout);
+        updateView();
+        newWorkoutBackground.setVisible(false);
+        
+    }
+
     @FXML 
     private void resetExerciseInput() {
         time.setText(null);
@@ -88,7 +88,7 @@ public class TrainingLogController {
 
     @FXML 
     public void handleAddExercise() {
-        if (workout == null) {
+        if (Objects.isNull(workout)) {
             initializeWorkout();
         }
         Exercise ex = new Exercise(exercise.getText(), Integer.parseInt(time.getText()), Integer.parseInt(intensity.getText()));
@@ -96,8 +96,24 @@ public class TrainingLogController {
         resetExerciseInput(); 
     }   
 
+    @FXML
+    public void handleWorkoutIsPressed() {
+        handleShowWorkoutInfo();
+        removeWorkoutButton.setDisable(false);
+    }
+    
     @FXML 
-    public void handleRemoveWorkout() {
-        //trenger vi egentlig denne?
+    private void handleShowWorkoutInfo() {
+        Workout tmpWorkout = workoutList.getSelectionModel().getSelectedItem();
+        workoutInfo.setText(tmpWorkout.extendedToString());
+    }
+
+    @FXML 
+    private void handleRemoveWorkout() {
+        if (!Objects.isNull(workoutList.getSelectionModel().getSelectedItem())) {
+            log.removeWorkout(workoutList.getSelectionModel().getSelectedItem());
+            updateView();
+        }
+        
     }
 }

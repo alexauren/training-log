@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public class Log {
     
-    private Collection<Workout> workouts = new ArrayList<>();
+    private Collection<Workout> workouts = new ArrayList<Workout>();
     private int totalTime;
     
     public void addWorkout(Workout workout) {
