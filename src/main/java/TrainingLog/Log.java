@@ -24,18 +24,11 @@ public class Log {
         }
         int hours = totalTime / 60;
         int minutes = totalTime % 60;
-        return Integer.toString(hours) + ":" + Integer.toString(minutes); 
+        return Integer.toString(hours) + "h:" + Integer.toString(minutes) + "m"; 
     }
     
     public Collection<Workout> getWorkoutList() {
         return workouts;
     }
-    public static void main(String[] args) {
-        Workout w = new Workout("man", "02.02.2001");
-        Workout s = new Workout("tir", "01.02.2001");
-        Log l = new Log();
-        l.addWorkout(w);
-        l.addWorkout(s);
-        System.out.println(l.getWorkoutList());
-    }
+    
 }

@@ -15,9 +15,9 @@ public class TrainingLogController {
     @FXML 
     private ListView<Workout> workoutList;
     @FXML
-    private Button addWorkoutButton, removeWorkoutButton, saveTrainingLog, loadTrainingLog, addExercise, closeButton, saveButton;
+    private Button addWorkoutButton, removeWorkoutButton, saveTrainingLog, loadTrainingLog, addExerciseButton, closeButton, saveButton, newWorkoutButton;
     @FXML
-    private Text totalTime, workoutInfo, errorText;
+    private Text totalTime, workoutInfo, errorText, errorTextNewWorkout;
     @FXML 
     private TextField title, date, exercise, intensity, time;
     @FXML 
@@ -26,7 +26,7 @@ public class TrainingLogController {
     private Log log;
     private Workout workout;
     private List<Workout> emptyList = new ArrayList<Workout>();
-
+    
     @FXML 
     public void initialize() {
         log = new Log();
@@ -41,13 +41,15 @@ public class TrainingLogController {
             totalTime.setText(log.getTotalTime());        
             workoutList.getItems().setAll(log.getWorkoutList());
         }
-        catch (Exception e) {
+        catch (NullPointerException e) {
             workoutList.getItems().setAll(emptyList);
+            time.setText("0h:0m");
         }
         
         workout = null;
         removeWorkoutButton.setDisable(true);
         workoutInfo.setText(null);
+        errorTextNewWorkout.setText(null);   
     }
 
     @FXML
@@ -55,12 +57,21 @@ public class TrainingLogController {
         title.setText(null);
         date.setText(null);
         newWorkoutBackground.setVisible(true);
-        
+        updateDisableNewExercise(true);
+        title.setDisable(false);
+        date.setDisable(false);
+        newWorkoutButton.setDisable(false);
+    }
+    @FXML
+    private void updateDisableNewExercise(boolean b) {
+        exercise.setDisable(b);
+        intensity.setDisable(b);
+        time.setDisable(b);
+        addExerciseButton.setDisable(b);
     }
 
     @FXML
     public void handleCloseButton() {
-        workout = null;
         updateView();
         newWorkoutBackground.setVisible(false);
         
@@ -76,24 +87,41 @@ public class TrainingLogController {
 
     @FXML 
     private void resetExerciseInput() {
-        time.setText(null);
-        exercise.setText(null);
-        intensity.setText(null);
+        time.setText("");
+        exercise.setText("");
+        intensity.setText("");
     }
 
     @FXML
     private void initializeWorkout() {
-        workout = new Workout(title.getText(), date.getText());
+        try {
+            workout = new Workout(title.getText(), date.getText());
+        newWorkoutButton.setDisable(true);
+        title.setDisable(true);
+        date.setDisable(true);
+        updateDisableNewExercise(false);
+        errorTextNewWorkout.setText(null);
+        }
+        catch (IllegalArgumentException e) {
+            handleAddWorkout();
+            errorTextNewWorkout.setText(e.getMessage());
+        } 
     }
 
     @FXML 
     public void handleAddExercise() {
-        if (Objects.isNull(workout)) {
-            initializeWorkout();
+        try {
+            Exercise ex = new Exercise(exercise.getText(), Integer.parseInt(time.getText()), Integer.parseInt(intensity.getText()));
+            workout.addExercise(ex);
+            resetExerciseInput(); 
+            errorTextNewWorkout.setText(null);
         }
-        Exercise ex = new Exercise(exercise.getText(), Integer.parseInt(time.getText()), Integer.parseInt(intensity.getText()));
-        workout.addExercise(ex);
-        resetExerciseInput(); 
+        catch (IllegalArgumentException e) {
+            errorTextNewWorkout.setText("Please enter valid exercise parameters.");
+        }
+        finally {
+            exercise = null;
+        }
     }   
 
     @FXML
@@ -114,6 +142,5 @@ public class TrainingLogController {
             log.removeWorkout(workoutList.getSelectionModel().getSelectedItem());
             updateView();
         }
-        
     }
 }

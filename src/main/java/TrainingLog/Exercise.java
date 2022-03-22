@@ -1,5 +1,7 @@
 package traininglog;
 
+import java.util.Objects;
+
 public class Exercise {
     
     private String name;
@@ -7,20 +9,23 @@ public class Exercise {
     private int intensity;
     
     public Exercise(String name, int time, int intensity) {
-        if (this.isValidExercise()) {
+        if (isValidExercise(name, time, intensity)) {
             this.name = name;
             this.time = time;
             this.intensity = intensity;
         }
-        else throw new IllegalArgumentException("Invalid exercse parameters.");     
+        else throw new IllegalArgumentException("Invalid exercise parameters.");     
     }
 
-    private boolean isValidExercise() {
-        if (time <= 0 && time > 180) {
+    private boolean isValidExercise(String name, int time, int intensity) {
+        if (time <= 0 || time > 180 || Objects.isNull(time)) {
             return false;
         }
-        else if (intensity <= 0 && intensity > 10) {
+        else if (intensity <= 0 || intensity > 10) {
         return false;
+        }
+        if (name == null) {
+            return false;
         }
         return true;
     }

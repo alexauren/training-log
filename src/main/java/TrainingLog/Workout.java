@@ -50,12 +50,6 @@ public class Workout {
         exercises.add(exercise);
     }
 
-    public void removeExercise(Exercise exercise) {
-        if (exercises.contains(exercise)) {
-            exercises.remove(exercise);
-        }
-        else throw new IllegalArgumentException("The exercise doesn't exist");
-    }
 
     public int getTime() {
         for (Exercise exercise : exercises) {
@@ -63,6 +57,8 @@ public class Workout {
         }
         return time;
     }
+
+    //trengs egentlig denne?
     public Collection<Exercise> getExercises() {
         return exercises;
     }
