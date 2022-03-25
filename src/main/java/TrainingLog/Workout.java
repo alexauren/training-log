@@ -11,14 +11,23 @@ public class Workout {
     private String date;
     
     public Workout(String name, String date) {
-        if(validDate(date)) {
+        if(!validDate(date)) {
+            throw new IllegalArgumentException("Please enter a valid date.");
+        }
+
+        else if(name.length() < 1 || name.length() > 20) {
+            throw new IllegalArgumentException("Please enter a valid workout name (1-20 chars).");
+        }
+        else {
             this.name = name;
             this.date = date;
         }
-        else throw new IllegalArgumentException("Date must be writen as 'dd.mm.yyyy'.");
     }
 
     private boolean validDate(String date) {
+        if(date.length() < 10) {
+            return false;
+        }
         String day = date.substring(0,2);
         if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 31) {
             return false;

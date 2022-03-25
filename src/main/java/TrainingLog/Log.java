@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Log {
-    
+
     private Collection<Workout> workouts = new ArrayList<Workout>();
     private int totalTime;
-    
+
     public void addWorkout(Workout workout) {
         workouts.add(workout);
     }
@@ -19,16 +19,14 @@ public class Log {
     }
 
     public String getTotalTime() {
-        for (Workout workout : workouts) {
-            totalTime += workout.getTime();
-        }
+        totalTime = workouts.stream().mapToInt(w -> w.getTime()).sum();
         int hours = totalTime / 60;
         int minutes = totalTime % 60;
         return Integer.toString(hours) + "h:" + Integer.toString(minutes) + "m"; 
     }
-    
+
     public Collection<Workout> getWorkoutList() {
         return workouts;
     }
-    
+
 }

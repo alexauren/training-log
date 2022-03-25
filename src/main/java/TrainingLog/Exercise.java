@@ -19,13 +19,14 @@ public class Exercise {
 
     private boolean isValidExercise(String name, int time, int intensity) {
         if (time <= 0 || time > 180 || Objects.isNull(time)) {
-            return false;
+            throw new IllegalArgumentException("Please enter a time between 0 and 180 minutes.");
+
         }
         else if (intensity <= 0 || intensity > 10) {
-        return false;
+            throw new IllegalArgumentException("Please enter an intensity between 0 and 10 minutes.");
         }
-        if (name == null) {
-            return false;
+        if (name == null || name.length() > 20) {
+            throw new IllegalArgumentException("Please enter a valid exercise name (1-20 chars).");
         }
         return true;
     }

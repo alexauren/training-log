@@ -28,26 +28,26 @@
       <Text layoutX="54.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total time spent training:" />
       <Text fx:id="totalTime" layoutX="196.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
       <Text fx:id="workoutInfo" layoutX="281.0" layoutY="77.0" lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on a workout to view it's info." textAlignment="CENTER" wrappingWidth="277.0" />
-      <AnchorPane fx:id="newWorkoutBackground" layoutX="-7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" visible="false">
+      <AnchorPane fx:id="newWorkoutBackground" layoutX="-8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" visible="false">
          <children>
-            <TextField fx:id="exercise" layoutX="117.0" layoutY="228.0" />
-            <Text layoutX="18.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exercise name:" />
-            <Text layoutX="57.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date (dd.mm.yyy):" />
-            <TextField fx:id="date" layoutX="112.0" layoutY="98.0" />
-            <Text layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workout title:">
+            <TextField fx:id="exercise" layoutX="128.0" layoutY="228.0" />
+            <Text layoutX="37.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exercise name:" />
+            <Text layoutX="18.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date (dd.mm.yyy):" />
+            <TextField fx:id="date" layoutX="128.0" layoutY="98.0" />
+            <Text layoutX="31.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workout title:">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="title" layoutX="113.0" layoutY="33.0" prefHeight="40.0" prefWidth="211.0">
+            <TextField fx:id="title" layoutX="128.0" layoutY="32.0" prefHeight="40.0" prefWidth="211.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Text layoutX="9.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Intensity (1-10):" />
-            <Text layoutX="31.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time spent (mins):" />
-            <TextField fx:id="intensity" layoutX="117.0" layoutY="289.0" />
-            <TextField fx:id="time" layoutX="117.0" layoutY="345.0" />
+            <Text layoutX="32.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Intensity (1-10):" />
+            <Text layoutX="18.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time spent (mins):" />
+            <TextField fx:id="intensity" layoutX="128.0" layoutY="288.0" />
+            <TextField fx:id="time" layoutX="128.0" layoutY="345.0" />
             <Button fx:id="addExerciseButton" layoutX="300.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleAddExercise" prefHeight="26.0" prefWidth="94.0" text="Add exercise" />
             <Button fx:id="closeButton" layoutX="428.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleCloseButton" text="Close without saving" textFill="#cf0f0f" />
             <Button fx:id="saveButton" layoutX="427.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleSaveWorkout" prefHeight="26.0" prefWidth="126.0" text="Save and close" textFill="#15b415" />
