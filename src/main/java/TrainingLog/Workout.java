@@ -2,6 +2,7 @@ package traininglog;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 public class Workout {
 
@@ -61,15 +62,11 @@ public class Workout {
 
 
     public int getTime() {
-        for (Exercise exercise : exercises) {
-            time += exercise.getTime();
-        }
-        return time;
+        return this.getExercises().stream().mapToInt(e -> e.getTime()).sum();
     }
 
-    //trengs egentlig denne?
     public Collection<Exercise> getExercises() {
-        return exercises;
+        return new ArrayList<Exercise>(exercises);
     }
 
     @Override
@@ -87,10 +84,42 @@ public class Workout {
         "Name: " + name + ", " +
         "Date: " + date + 
         "\n\n" + tmpExercises + "\n" +
-        "Total time spent: " + time
+        "Total time spent: " + this.getTime()
         );
         
         return tmpString;
     }
+
+    private int getYear() {
+        return Integer.parseInt(this.getDate().substring(6));
+    }
+    private int getMonth() {
+        return Integer.parseInt(this.getDate().substring(3,5));
+    }
+    private int getDay() {
+        return Integer.parseInt(this.getDate().substring(0,2));
+    }
+
+    public static Comparator<Workout> workoutComparatorDate = new Comparator<Workout>() {
+        @Override
+        public int compare(Workout o1, Workout o2) {
+            if (o1.getYear() != o2.getYear()){
+                return o1.getYear() - o2.getYear();
+            }
+            else if (o1.getMonth() != o2.getMonth()){
+                return o1.getMonth() - o2.getMonth();
+            }
+            else {
+                return o1.getDay() - o2.getDay();
+            }
+        }
+    };
+
+    public static Comparator<Workout> workoutComparatorTime = new Comparator<Workout>() {
+        @Override
+        public int compare(Workout o1, Workout o2) {
+            return (int) o1.getTime() - o2.getTime();
+        }
+    };
     
 }

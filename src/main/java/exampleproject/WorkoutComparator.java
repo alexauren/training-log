@@ -1,6 +1,8 @@
-package traininglog;
+package exampleproject;
 
 import java.util.Comparator;
+
+import traininglog.Workout;
 
 public class WorkoutComparator implements Comparator<Workout>{
 

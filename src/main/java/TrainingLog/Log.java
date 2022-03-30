@@ -1,11 +1,10 @@
 package traininglog;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Log {
 
-    private Collection<Workout> workouts = new ArrayList<Workout>();
+    private ArrayList<Workout> workouts = new ArrayList<Workout>();
     private int totalTime;
 
     public void addWorkout(Workout workout) {
@@ -19,14 +18,22 @@ public class Log {
     }
 
     public String getTotalTime() {
-        totalTime = workouts.stream().mapToInt(w -> w.getTime()).sum();
+        totalTime = this.getWorkoutList(true).stream().mapToInt(w -> w.getTime()).sum();
         int hours = totalTime / 60;
         int minutes = totalTime % 60;
         return Integer.toString(hours) + "h:" + Integer.toString(minutes) + "m"; 
     }
 
-    public Collection<Workout> getWorkoutList() {
-        return workouts;
+    public ArrayList<Workout> getWorkoutList(boolean dateSort) {
+        ArrayList<Workout> workoutsCopy = new ArrayList<Workout>(workouts);
+        if (dateSort) {
+            workoutsCopy.sort(Workout.workoutComparatorDate);
+        }
+        else {
+            workoutsCopy.sort(Workout.workoutComparatorTime);
+        }
+
+        return workoutsCopy;
     }
 
 }
