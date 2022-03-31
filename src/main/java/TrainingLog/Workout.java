@@ -3,12 +3,12 @@ package traininglog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class Workout {
 
     private String name;
     private Collection<Exercise> exercises = new ArrayList<>();
-    private int time;
     private String date;
     
     public Workout(String name, String date) {
@@ -90,6 +90,11 @@ public class Workout {
         return tmpString;
     }
 
+    public String workoutToFile() {
+        String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
+        return this.getName() + "," + this.getDate() + "," + tmpExercises + "\n";
+    }
+
     private int getYear() {
         return Integer.parseInt(this.getDate().substring(6));
     }
@@ -100,26 +105,18 @@ public class Workout {
         return Integer.parseInt(this.getDate().substring(0,2));
     }
 
-    public static Comparator<Workout> workoutComparatorDate = new Comparator<Workout>() {
-        @Override
-        public int compare(Workout o1, Workout o2) {
-            if (o1.getYear() != o2.getYear()){
-                return o1.getYear() - o2.getYear();
-            }
-            else if (o1.getMonth() != o2.getMonth()){
-                return o1.getMonth() - o2.getMonth();
-            }
-            else {
-                return o1.getDay() - o2.getDay();
-            }
+    public static Comparator<Workout> workoutComparatorDate = (o1, o2) -> {
+        if (o1.getYear() != o2.getYear()){
+            return o1.getYear() - o2.getYear();
+        }
+        else if (o1.getMonth() != o2.getMonth()){
+            return o1.getMonth() - o2.getMonth();
+        }
+        else {
+            return o1.getDay() - o2.getDay();
         }
     };
 
-    public static Comparator<Workout> workoutComparatorTime = new Comparator<Workout>() {
-        @Override
-        public int compare(Workout o1, Workout o2) {
-            return (int) o1.getTime() - o2.getTime();
-        }
-    };
+    public static Comparator<Workout> workoutComparatorTime = (o1, o2) -> (int) o1.getTime() - o2.getTime();
     
 }

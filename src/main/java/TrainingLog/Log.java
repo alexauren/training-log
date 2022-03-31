@@ -11,6 +11,10 @@ public class Log {
         workouts.add(workout);
     }
 
+    public void setWorkouts(ArrayList<Workout> workoutList) {
+        this.workouts = workoutList;
+    }
+
     public void removeWorkout(Workout workout) {
         if (workouts.contains(workout)) {
             workouts.remove(workout);

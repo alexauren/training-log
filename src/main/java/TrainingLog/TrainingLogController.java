@@ -1,5 +1,6 @@
 package traininglog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class TrainingLogController {
     @FXML 
     private ListView<Workout> workoutList;
     @FXML
-    private Button addWorkoutButton, removeWorkoutButton, saveTrainingLog, loadTrainingLog, addExerciseButton, closeButton, saveButton, newWorkoutButton, exitChartButton;
+    private Button addWorkoutButton, removeWorkoutButton, saveLogButton, loadLogButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, exitChartButton;
     @FXML
     private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice;
     @FXML 
@@ -33,6 +34,7 @@ public class TrainingLogController {
     private Workout workout;
     private List<Workout> emptyList = new ArrayList<>();
     private boolean dateSort;
+    private FileEditor fileEditor = new FileEditor();
     
     @FXML 
     public void initialize() {
@@ -148,8 +150,8 @@ public class TrainingLogController {
 
     @FXML
     public void handleWorkoutSort() {
-        if (dateButton.isSelected()) {
-            dateSort = true;
+        if (!dateButton.isSelected()) {
+            dateSort = false;
         }
         else dateSort = false;
         updateView();
@@ -163,5 +165,24 @@ public class TrainingLogController {
     @FXML 
     public void showIntensityData() {
 
+    }
+
+    @FXML
+    public void saveLog() {
+        try {
+            fileEditor.writeToFile(log.getWorkoutList(true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void loadLog() {
+        try {
+            log.setWorkouts(fileEditor.readFromFile());;
+            updateView();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -49,4 +49,8 @@ public class Exercise {
     public String toString() {
         return "Exercise: " + name + ", Time: " + time + ", Intensity: " + intensity;
     }
+
+    public String exerciseTofile() {
+        return name + "," + time + "," + intensity + ",";
+    }
 }

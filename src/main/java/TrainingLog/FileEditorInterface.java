@@ -1,8 +1,12 @@
 package traininglog;
 
+import java.io.IOException;
+import java.util.List;
+
 public interface FileEditorInterface {
     
-    public void readFile(String file);
+    public List<Workout> readFromFile() throws IOException;
 
-    public void writeFile(String file);
+    public void writeToFile(List<Workout> workouts) throws IOException;
+
 }
