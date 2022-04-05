@@ -65,6 +65,12 @@ public class Workout {
         return this.getExercises().stream().mapToInt(e -> e.getTime()).sum();
     }
 
+    public double getAvgIntensity() {
+        return this.getExercises().stream()
+            .mapToDouble(e -> e.getIntensity()).sum() 
+            / this.getExercises().size();
+    }
+
     public Collection<Exercise> getExercises() {
         return new ArrayList<Exercise>(exercises);
     }

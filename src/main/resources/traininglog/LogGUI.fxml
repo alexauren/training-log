@@ -14,6 +14,7 @@
 
 <AnchorPane fx:id="logBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="traininglog.TrainingLogController">
    <children>
+      <Button fx:id="intensityCoachButton" layoutX="478.0" layoutY="302.0" mnemonicParsing="false" onAction="#showIntensityData" prefHeight="26.0" prefWidth="106.0" text="Intensity coach" />
       <Text layoutX="57.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by:" />
       <RadioButton fx:id="dateButton" layoutX="54.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleWorkoutSort" selected="true" text="Date">
          <toggleGroup>
@@ -21,7 +22,7 @@
          </toggleGroup>
       </RadioButton>
       <RadioButton fx:id="timeButton" layoutX="114.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleWorkoutSort" text="Time spent" toggleGroup="$sort" />
-      <Text fx:id="errorText" fill="#ec1818" layoutX="171.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="257.33673095703125" />
+      <Text fx:id="errorText" fill="#ec1818" layoutX="220.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="240.5367431640625" />
       <ListView fx:id="workoutList" layoutX="54.0" layoutY="100.0" onMouseClicked="#handleWorkoutIsPressed" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="112.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workouts">
          <font>
@@ -33,8 +34,8 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="safeLogButton" layoutX="467.0" layoutY="301.0" mnemonicParsing="false" onAction="#saveLog" prefHeight="27.0" prefWidth="106.0" text="Save traininglog" />
-      <Button fx:id="loadLogButton" layoutX="467.0" layoutY="338.0" mnemonicParsing="false" onAction="#loadLog" prefHeight="25.0" prefWidth="106.0" text="Load traininglog" />
+      <Button fx:id="safeLogButton" layoutX="479.0" layoutY="337.0" mnemonicParsing="false" onAction="#saveLog" prefHeight="27.0" prefWidth="106.0" text="Save traininglog" />
+      <Button fx:id="loadLogButton" layoutX="366.0" layoutY="338.0" mnemonicParsing="false" onAction="#loadLog" prefHeight="25.0" prefWidth="106.0" text="Load traininglog" />
       <Button fx:id="addWorkoutButton" layoutX="154.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add workout" />
       <Button fx:id="removeWorkoutButton" layoutX="39.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleRemoveWorkout" text="Remove workout" />
       <Text layoutX="54.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total time spent training:" />
@@ -64,7 +65,7 @@
             <Button fx:id="closeButton" layoutX="428.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleCloseButton" text="Close without saving" textFill="#cf0f0f" />
             <Button fx:id="saveButton" layoutX="427.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleSaveWorkout" prefHeight="26.0" prefWidth="126.0" text="Save and close" textFill="#15b415" />
             <Button fx:id="newWorkoutButton" layoutX="300.0" layoutY="98.0" mnemonicParsing="false" onAction="#initializeWorkout" prefHeight="26.0" prefWidth="94.0" text="Add workout" />
-            <Text fx:id="errorTextNewWorkout" fill="#d30909" layoutX="112.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="449.5999755859374" />
+            <Text fx:id="errorTextNewWorkout" fill="#d90909" layoutX="112.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="449.5999755859374" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="intensityData" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" visible="false">

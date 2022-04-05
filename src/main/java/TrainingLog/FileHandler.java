@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileEditor implements FileEditorInterface {
+public class FileHandler implements FileHandlerInterface {
 
     @Override
     public void writeToFile(List<Workout> workouts) throws IOException {

@@ -18,7 +18,7 @@ public class TrainingLogController {
     @FXML 
     private ListView<Workout> workoutList;
     @FXML
-    private Button addWorkoutButton, removeWorkoutButton, saveLogButton, loadLogButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, exitChartButton;
+    private Button addWorkoutButton, removeWorkoutButton, saveLogButton, loadLogButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, exitChartButton, intensityCoachButton;
     @FXML
     private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice;
     @FXML 
@@ -27,19 +27,19 @@ public class TrainingLogController {
     private AnchorPane newWorkoutBackground, logBackground, intensityData;
     @FXML 
     private RadioButton dateButton, timeButton;
-    @FXML
-    private LineChart intensityChart;
+    /* @FXML
+    private LineChart<> intensityChart; */
 
     private Log log;
     private Workout workout;
     private List<Workout> emptyList = new ArrayList<>();
     private boolean dateSort;
-    private FileEditor fileEditor = new FileEditor();
+    private FileHandler fileHandler = new FileHandler();
     
     @FXML 
     public void initialize() {
         log = new Log();
-        workoutInfo.setText("Click on a workout to see info.");
+        workoutInfo.setText("Add a workout or load a training log to view info.");
         newWorkoutBackground.setVisible(false);
         intensityData.setVisible(false);
         removeWorkoutButton.setDisable(true);
@@ -59,7 +59,9 @@ public class TrainingLogController {
         
         workout = null;
         removeWorkoutButton.setDisable(true);
-        workoutInfo.setText(null);
+        workoutInfo.setText("Click on a workout to view it's info.");
+        errorText.setStyle("#ec1818");
+        errorText.setText(null);
         errorTextNewWorkout.setText(null);   
     }
 
@@ -90,9 +92,14 @@ public class TrainingLogController {
 
     @FXML
     public void handleSaveWorkout() {
-        log.addWorkout(workout);
-        updateView();
-        newWorkoutBackground.setVisible(false);
+        try {
+            log.addWorkout(workout);
+            updateView();
+            newWorkoutBackground.setVisible(false);
+        }
+        catch(IllegalStateException e) {
+            errorTextNewWorkout.setText(e.getMessage());
+        }
     }
 
     @FXML 
@@ -164,13 +171,16 @@ public class TrainingLogController {
 
     @FXML 
     public void showIntensityData() {
-
+        intensityData.setVisible(true);
+        intensityAdvice.setText(log.getIntensityAdvice());
     }
 
     @FXML
     public void saveLog() {
         try {
-            fileEditor.writeToFile(log.getWorkoutList(true));
+            fileHandler.writeToFile(log.getWorkoutList(true));
+            errorText.setStyle("-fx-fill:#03cc00");
+            errorText.setText("File saved successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,7 +189,7 @@ public class TrainingLogController {
     @FXML
     public void loadLog() {
         try {
-            log.setWorkouts(fileEditor.readFromFile());;
+            log.setWorkouts(fileHandler.readFromFile());;
             updateView();
         } catch (IOException e) {
             e.printStackTrace();

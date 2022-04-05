@@ -8,7 +8,10 @@ public class Log {
     private int totalTime;
 
     public void addWorkout(Workout workout) {
-        workouts.add(workout);
+        if (workout.getExercises().size() > 0) {
+            workouts.add(workout);
+        }
+        else throw new IllegalStateException("Please add at least one exercise before saving your workout.");
     }
 
     public void setWorkouts(ArrayList<Workout> workoutList) {
@@ -38,6 +41,18 @@ public class Log {
         }
 
         return workoutsCopy;
+    }
+
+    public String getIntensityAdvice() {
+        double avg = (workouts.stream()
+            .mapToDouble(w -> w.getAvgIntensity())).sum() 
+            / workouts.size();
+        String advice;
+        if (avg > 8) {
+            advice =  "Your average training intensity is " + avg + ". You should consider traing less hard to avoid overtraining.";
+        }
+        else advice = "Your average training intensity is " + avg + ". You should consider traing harter if you want more gains.";
+        return advice;
     }
 
 }
