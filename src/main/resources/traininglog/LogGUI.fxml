@@ -68,14 +68,14 @@
             <Text fx:id="errorTextNewWorkout" fill="#d90909" layoutX="112.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="449.5999755859374" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="intensityData" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" visible="false">
+      <AnchorPane fx:id="intensityData" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>
-            <LineChart fx:id="intenstiyChart" layoutX="-1.0" layoutY="1.0" prefHeight="298.0" prefWidth="600.0" title="Intensity over time">
+            <LineChart fx:id="intensityChart" layoutX="-1.0" layoutY="1.0" prefHeight="298.0" prefWidth="600.0" title="Intensity over time">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis animated="false" endMargin="0.0" side="BOTTOM" startMargin="0.0" tickLabelGap="1.0" tickLength="10.0" fx:id="xAxis" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis fx:id="yAxis" lowerBound="1.0" minorTickCount="1" side="LEFT" tickLabelGap="1.0" upperBound="10.0" />
               </yAxis>
             </LineChart>
             <Text fx:id="intensityAdvice" layoutX="102.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="396.53668212890625" />

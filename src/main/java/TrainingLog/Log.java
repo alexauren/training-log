@@ -2,6 +2,7 @@ package traininglog;
 
 import java.util.ArrayList;
 
+
 public class Log {
 
     private ArrayList<Workout> workouts = new ArrayList<Workout>();
@@ -47,11 +48,12 @@ public class Log {
         double avg = (workouts.stream()
             .mapToDouble(w -> w.getAvgIntensity())).sum() 
             / workouts.size();
+        String avgString = String.format("%.2f", avg);
         String advice;
         if (avg > 8) {
-            advice =  "Your average training intensity is " + avg + ". You should consider traing less hard to avoid overtraining.";
+            advice =  "Your average training intensity is " + avgString + ". You should consider training less hard to avoid overtraining.";
         }
-        else advice = "Your average training intensity is " + avg + ". You should consider traing harter if you want more gains.";
+        else advice = "Your average training intensity is " + avgString + ". You should consider training harder if you want more gains.";
         return advice;
     }
 

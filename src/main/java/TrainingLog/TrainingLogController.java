@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
 
 public class TrainingLogController {
 
@@ -27,8 +31,12 @@ public class TrainingLogController {
     private AnchorPane newWorkoutBackground, logBackground, intensityData;
     @FXML 
     private RadioButton dateButton, timeButton;
-    /* @FXML
-    private LineChart<> intensityChart; */
+    @FXML 
+    private CategoryAxis xAxis;
+    @FXML 
+    private NumberAxis yAxis;
+    @FXML 
+    private LineChart<String, Number> intensityChart;
 
     private Log log;
     private Workout workout;
@@ -44,6 +52,8 @@ public class TrainingLogController {
         intensityData.setVisible(false);
         removeWorkoutButton.setDisable(true);
         totalTime.setText("0h:0m");
+        workoutList.setStyle("-fx-font-family: 'monospaced'");
+        dateSort = true;
     }
 
     @FXML
@@ -160,7 +170,7 @@ public class TrainingLogController {
         if (!dateButton.isSelected()) {
             dateSort = false;
         }
-        else dateSort = false;
+        else dateSort = true;
         updateView();
     }
 
@@ -171,8 +181,21 @@ public class TrainingLogController {
 
     @FXML 
     public void showIntensityData() {
+        intensityChart.getData().clear();
         intensityData.setVisible(true);
         intensityAdvice.setText(log.getIntensityAdvice());
+            
+        xAxis.setLabel("Date");
+        yAxis.setLabel("Intensity");
+        
+        XYChart.Series<String, Number> intensitySeries = new XYChart.Series<String, Number>();
+        intensitySeries.setName("Intensity");
+
+        log.getWorkoutList(true).stream().forEach(w -> {
+            intensitySeries.getData().add(new XYChart.Data<String, Number>(w.getDate(), w.getAvgIntensity()));
+        });
+
+        intensityChart.getData().add(intensitySeries);
     }
 
     @FXML

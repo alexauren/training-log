@@ -77,7 +77,7 @@ public class Workout {
 
     @Override
     public String toString() {
-        return name + ", Date: " + date;
+        return String.format("%-7s %-16s", this.getName() + ", ", "Date: " + this.getDate());
     }
 
     public String extendedToString() {
