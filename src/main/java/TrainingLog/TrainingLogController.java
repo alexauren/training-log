@@ -2,7 +2,6 @@ package traininglog;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -40,12 +39,11 @@ public class TrainingLogController {
 
     private Log log;
     private Workout workout;
-    private List<Workout> emptyList = new ArrayList<>();
     private boolean dateSort;
     private FileHandler fileHandler = new FileHandler();
     
     @FXML 
-    public void initialize() {
+    private void initialize() {
         log = new Log();
         workoutInfo.setText("Add a workout or load a training log to view info.");
         newWorkoutBackground.setVisible(false);
@@ -56,14 +54,13 @@ public class TrainingLogController {
         dateSort = true;
     }
 
-    @FXML
     private void updateView() {
         try {
             totalTime.setText(log.getTotalTime());
             workoutList.getItems().setAll(log.getWorkoutList(dateSort));
         }
         catch (NullPointerException e) {
-            workoutList.getItems().setAll(emptyList);
+            workoutList.getItems().setAll(new ArrayList<>());
             totalTime.setText("0h:0m");
         }
         
@@ -76,14 +73,13 @@ public class TrainingLogController {
     }
 
     @FXML
-    public void handleAddWorkout() {
+    private void handleAddWorkout() {
         newWorkoutBackground.setVisible(true);
         updateEnabledFields(true);
         title.setText("");
         date.setText("");
     }
 
-    @FXML
     private void updateEnabledFields(boolean b) {
         exercise.setDisable(b);
         intensity.setDisable(b);
@@ -95,13 +91,13 @@ public class TrainingLogController {
         }
 
     @FXML
-    public void handleCloseButton() {
+    private void handleCloseButton() {
         updateView();
         newWorkoutBackground.setVisible(false);    
     }
 
     @FXML
-    public void handleSaveWorkout() {
+    private void handleSaveWorkout() {
         try {
             log.addWorkout(workout);
             updateView();
@@ -111,8 +107,7 @@ public class TrainingLogController {
             errorTextNewWorkout.setText(e.getMessage());
         }
     }
-
-    @FXML 
+ 
     private void resetExerciseInput() {
         time.setText("");
         exercise.setText("");
@@ -120,7 +115,7 @@ public class TrainingLogController {
     }
 
     @FXML
-    public void initializeWorkout() {
+    private void initializeWorkout() {
         try {
         workout = new Workout(title.getText(), date.getText());
         updateEnabledFields(false);
@@ -133,7 +128,7 @@ public class TrainingLogController {
     }
 
     @FXML 
-    public void handleAddExercise() {
+    private void handleAddExercise() {
         try {
             Exercise ex = new Exercise(exercise.getText(), Integer.parseInt(time.getText()), Integer.parseInt(intensity.getText()));
             workout.addExercise(ex);
@@ -146,18 +141,17 @@ public class TrainingLogController {
     }   
 
     @FXML
-    public void handleWorkoutIsPressed() {
+    private void handleWorkoutIsPressed() {
         ShowWorkoutInfo();
         removeWorkoutButton.setDisable(false);
     }
     
-    @FXML 
     private void ShowWorkoutInfo() {
         Workout tmpWorkout = workoutList.getSelectionModel().getSelectedItem();
         workoutInfo.setText(tmpWorkout.extendedToString());
     }
 
-    @FXML 
+    @FXML
     private void handleRemoveWorkout() {
         if (!Objects.isNull(workoutList.getSelectionModel().getSelectedItem())) {
             log.removeWorkout(workoutList.getSelectionModel().getSelectedItem());
@@ -166,7 +160,7 @@ public class TrainingLogController {
     }
 
     @FXML
-    public void handleWorkoutSort() {
+    private void handleWorkoutSort() {
         if (!dateButton.isSelected()) {
             dateSort = false;
         }
@@ -175,12 +169,12 @@ public class TrainingLogController {
     }
 
     @FXML
-    public void exitIntensityData() {
+    private void exitIntensityData() {
         intensityData.setVisible(false);
     }
 
     @FXML 
-    public void showIntensityData() {
+    private void showIntensityData() {
         intensityChart.getData().clear();
         intensityData.setVisible(true);
         intensityAdvice.setText(log.getIntensityAdvice());
@@ -199,7 +193,7 @@ public class TrainingLogController {
     }
 
     @FXML
-    public void saveLog() {
+    private void saveLog() {
         try {
             fileHandler.writeToFile(log.getWorkoutList(true));
             errorText.setStyle("-fx-fill:#03cc00");
@@ -210,7 +204,7 @@ public class TrainingLogController {
     }
 
     @FXML
-    public void loadLog() {
+    private void loadLog() {
         try {
             log.setWorkouts(fileHandler.readFromFile());;
             updateView();

@@ -10,34 +10,33 @@ public class Workout {
     private String name;
     private Collection<Exercise> exercises = new ArrayList<>();
     private String date;
-    
+
     public Workout(String name, String date) {
-        if(!validDate(date)) {
+        if (!validDate(date)) {
             throw new IllegalArgumentException("Please enter a valid date.");
         }
 
-        else if(name.length() < 1 || name.length() > 20) {
+        else if (name.length() < 1 || name.length() > 15) {
             throw new IllegalArgumentException("Please enter a valid workout name (1-20 chars).");
-        }
-        else {
+        } else {
             this.name = name;
             this.date = date;
         }
     }
 
     private boolean validDate(String date) {
-        if(date.length() < 10) {
+        if (date.length() < 10) {
             return false;
         }
-        String day = date.substring(0,2);
+        String day = date.substring(0, 2);
         if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 31) {
             return false;
         }
-        String month = date.substring(3,5);
+        String month = date.substring(3, 5);
         if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 12) {
             return false;
         }
-        String year = date.substring(6,10);
+        String year = date.substring(6, 10);
         if (Integer.parseInt(year) < 0 || Integer.parseInt(day) > 2022) {
             return false;
         }
@@ -60,15 +59,14 @@ public class Workout {
         exercises.add(exercise);
     }
 
-
     public int getTime() {
         return this.getExercises().stream().mapToInt(e -> e.getTime()).sum();
     }
 
     public double getAvgIntensity() {
         return this.getExercises().stream()
-            .mapToDouble(e -> e.getIntensity()).sum() 
-            / this.getExercises().size();
+                .mapToDouble(e -> e.getIntensity()).sum()
+                / this.getExercises().size();
     }
 
     public Collection<Exercise> getExercises() {
@@ -77,7 +75,7 @@ public class Workout {
 
     @Override
     public String toString() {
-        return String.format("%-7s %-16s", this.getName() + ", ", "Date: " + this.getDate());
+        return this.getDate() + ":  " + this.getName();
     }
 
     public String extendedToString() {
@@ -87,12 +85,11 @@ public class Workout {
             tmpExercises += exercise.toString() + "\n";
         }
         String tmpString = new String(
-        "Name: " + name + ", " +
-        "Date: " + date + 
-        "\n\n" + tmpExercises + "\n" +
-        "Total time spent: " + this.getTime()
-        );
-        
+            "Name: " + name + ", " +
+            "Date: " + date +
+            "\n\n" + tmpExercises + "\n" +
+            "Total time spent: " + this.getTime());
+
         return tmpString;
     }
 
@@ -104,25 +101,25 @@ public class Workout {
     private int getYear() {
         return Integer.parseInt(this.getDate().substring(6));
     }
+
     private int getMonth() {
-        return Integer.parseInt(this.getDate().substring(3,5));
+        return Integer.parseInt(this.getDate().substring(3, 5));
     }
+
     private int getDay() {
-        return Integer.parseInt(this.getDate().substring(0,2));
+        return Integer.parseInt(this.getDate().substring(0, 2));
     }
 
     public static Comparator<Workout> workoutComparatorDate = (o1, o2) -> {
-        if (o1.getYear() != o2.getYear()){
+        if (o1.getYear() != o2.getYear()) {
             return o1.getYear() - o2.getYear();
-        }
-        else if (o1.getMonth() != o2.getMonth()){
+        } else if (o1.getMonth() != o2.getMonth()) {
             return o1.getMonth() - o2.getMonth();
-        }
-        else {
+        } else {
             return o1.getDay() - o2.getDay();
         }
     };
 
     public static Comparator<Workout> workoutComparatorTime = (o1, o2) -> (int) o1.getTime() - o2.getTime();
-    
+
 }

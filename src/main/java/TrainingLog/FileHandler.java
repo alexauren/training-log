@@ -14,7 +14,7 @@ public class FileHandler implements FileHandlerInterface {
 
     @Override
     public void writeToFile(List<Workout> workouts) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\java\\traininglog\\TrainingLog.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\resources\\traininglog\\TrainingLog.txt"));
         workouts.stream().forEach(workout -> {
             try {
                 writer.write(workout.workoutToFile());
@@ -28,7 +28,7 @@ public class FileHandler implements FileHandlerInterface {
     @Override
     public ArrayList<Workout> readFromFile() throws IOException {
         ArrayList<Workout> workouts = new ArrayList<>();
-        File file = new File("src\\main\\java\\traininglog\\TrainingLog.txt");
+        File file = new File("src\\main\\resources\\traininglog\\TrainingLog.txt");
         BufferedReader reader;
         reader = new BufferedReader(new FileReader(file));
         String s;

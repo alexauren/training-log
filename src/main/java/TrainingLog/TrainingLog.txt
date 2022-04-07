@@ -1,4 +1,0 @@
-Styrke,03.03.2022,Sq,15,8,
-Løping,04.03.2022,Sprints,15,10,
-Styrke,03.05.2022,Sq,15,8,
-Løping,05.03.2022,Sprints,15,10,
