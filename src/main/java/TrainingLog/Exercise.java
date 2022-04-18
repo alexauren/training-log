@@ -1,7 +1,5 @@
 package traininglog;
 
-import java.util.Objects;
-
 public class Exercise {
     
     private String name;
@@ -18,15 +16,14 @@ public class Exercise {
     }
 
     private boolean isValidExercise(String name, int time, int intensity) {
-        if (time <= 0 || time > 180 || Objects.isNull(time)) {
-            throw new IllegalArgumentException("Please enter a time between 0 and 180 minutes.");
-
+        if (time <= 0 || time > 180) {
+            throw new IllegalArgumentException("Please enter a time between 1 and 180 minutes.");
         }
         else if (intensity <= 0 || intensity > 10) {
-            throw new IllegalArgumentException("Please enter an intensity between 0 and 10 minutes.");
+            throw new IllegalArgumentException("Please enter an intensity between 1 and 10 minutes.");
         }
-        if (name == null || name.length() > 20) {
-            throw new IllegalArgumentException("Please enter a valid exercise name (1-20 chars).");
+        else if (name == null || name.length() > 15) {
+            throw new IllegalArgumentException("Please enter a valid exercise name (1-15 chars).");
         }
         return true;
     }

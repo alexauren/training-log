@@ -76,8 +76,8 @@ public class TrainingLogController {
     private void handleAddWorkout() {
         newWorkoutBackground.setVisible(true);
         updateEnabledFields(true);
-        title.setText("");
-        date.setText("");
+        title.clear();
+        date.clear();
     }
 
     private void updateEnabledFields(boolean b) {
@@ -109,9 +109,9 @@ public class TrainingLogController {
     }
  
     private void resetExerciseInput() {
-        time.setText("");
-        exercise.setText("");
-        intensity.setText("");
+        time.clear();
+        exercise.clear();
+        intensity.clear();
     }
 
     @FXML

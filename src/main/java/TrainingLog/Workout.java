@@ -1,6 +1,7 @@
 package traininglog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -13,11 +14,11 @@ public class Workout {
 
     public Workout(String name, String date) {
         if (!validDate(date)) {
-            throw new IllegalArgumentException("Please enter a valid date.");
+            throw new IllegalArgumentException("Please enter a valid date from either this year or last year.");
         }
 
         else if (name.length() < 1 || name.length() > 15) {
-            throw new IllegalArgumentException("Please enter a valid workout name (1-20 chars).");
+            throw new IllegalArgumentException("Please enter a valid workout name (1-15 chars).");
         } else {
             this.name = name;
             this.date = date;
@@ -28,18 +29,23 @@ public class Workout {
         if (date.length() < 10) {
             return false;
         }
+
         String day = date.substring(0, 2);
         if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 31) {
             return false;
         }
+
         String month = date.substring(3, 5);
-        if (Integer.parseInt(day) < 1 || Integer.parseInt(day) > 12) {
+        if (Integer.parseInt(month) < 1 || Integer.parseInt(month) > 12) {
             return false;
         }
+
         String year = date.substring(6, 10);
-        if (Integer.parseInt(year) < 0 || Integer.parseInt(day) > 2022) {
+        if (Integer.parseInt(year) < Calendar.getInstance().get(Calendar.YEAR) - 1 
+        || Integer.parseInt(year) > Calendar.getInstance().get(Calendar.YEAR)) {
             return false;
         }
+
         String dateTest = day + "." + month + "." + year;
         if (!dateTest.equals(date)) {
             return false;
@@ -113,9 +119,11 @@ public class Workout {
     public static Comparator<Workout> workoutComparatorDate = (o1, o2) -> {
         if (o1.getYear() != o2.getYear()) {
             return o1.getYear() - o2.getYear();
-        } else if (o1.getMonth() != o2.getMonth()) {
+        } 
+        else if (o1.getMonth() != o2.getMonth()) {
             return o1.getMonth() - o2.getMonth();
-        } else {
+        } 
+        else {
             return o1.getDay() - o2.getDay();
         }
     };

@@ -1,11 +1,13 @@
 package traininglog;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 public class Log {
 
-    private ArrayList<Workout> workouts = new ArrayList<Workout>();
+    private Collection<Workout> workouts = new ArrayList<Workout>();
     private int totalTime;
 
     public void addWorkout(Workout workout) {
@@ -23,6 +25,7 @@ public class Log {
         if (workouts.contains(workout)) {
             workouts.remove(workout);
         }
+        else throw new IllegalStateException("Cannot remove a workout that doesn't exist.");
     }
 
     public String getTotalTime() {
@@ -32,28 +35,32 @@ public class Log {
         return Integer.toString(hours) + "h:" + Integer.toString(minutes) + "m"; 
     }
 
-    public ArrayList<Workout> getWorkoutList(boolean dateSort) {
-        ArrayList<Workout> workoutsCopy = new ArrayList<Workout>(workouts);
+    public List<Workout> getWorkoutList(boolean dateSort) {
+        List<Workout> workoutsCopy = new ArrayList<Workout>(workouts);
         if (dateSort) {
             workoutsCopy.sort(Workout.workoutComparatorDate);
         }
         else {
             workoutsCopy.sort(Workout.workoutComparatorTime);
         }
-
         return workoutsCopy;
     }
 
     public String getIntensityAdvice() {
-        double avg = (workouts.stream()
-            .mapToDouble(w -> w.getAvgIntensity())).sum() 
+        double avg = workouts.stream()
+            .mapToDouble(w -> w.getAvgIntensity()).sum() 
             / workouts.size();
         String avgString = String.format("%.2f", avg);
         String advice;
         if (avg > 8) {
             advice =  "Your average training intensity is " + avgString + ". You should consider training less hard to avoid overtraining.";
         }
-        else advice = "Your average training intensity is " + avgString + ". You should consider training harder if you want more gains.";
+        else if (avg < 6) {
+            advice = "Your average training intensity is " + avgString + ". You should consider training harder if you want more gains.";
+        } 
+        else {
+            advice = "Your average training intensity is " + avgString + ", which is within the optimal range.";
+        }
         return advice;
     }
 
