@@ -1,0 +1,41 @@
+package traininglog;
+
+import java.util.stream.Collectors;
+
+public class RunningWorkout extends Workout {
+
+    private double distance;
+
+    public RunningWorkout(String name, String date, double distance) {
+        super(name, date);
+        if (distance > 0 && distance < 50) {
+        this.distance = distance;
+        }
+        else throw new IllegalArgumentException("Distance must be between 0-50");
+    } 
+
+    @Override 
+    public void addExercise(Exercise exercise) {
+        if (this.getExercises().size() > 0) {
+            throw new IllegalStateException("You can only have one exercise in running workouts.");
+        }
+        else exercises.add(exercise);
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    @Override
+    public String toString() {
+        return this.getDate() + ": " + this.getName() + ", " + this.getDistance() + "km";
+    }
+
+    @Override
+    public String workoutToFile() {
+        String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
+        return "Running" + "," + this.getName() + "," + this.getDate() + "," + this.getDistance() + "," +  tmpExercises + "\n";
+    }
+    
+    
+}

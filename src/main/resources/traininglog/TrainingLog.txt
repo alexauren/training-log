@@ -1,4 +1,4 @@
-Styrke,03.03.2022,Sq,15,8,Benk,20,7,
-Langkjør,04.03.2022,Løping,60,7,
-Styrke bein,03.05.2022,Sq,15,8,Benpress,10,10,
-Intervaller,05.03.2022,4x4,25,9,
+Running,Long run,02.03.2022,10.0,Run,50,6,
+Strength,03.03.2022,Squat,10,8,Deadlift,15,7,
+Running,4x4 intervals,05.03.2022,8.0,Run,30,8,
+Chest,01.04.2022,Bench,10,8,Dips,15,7,Flies,20,9,

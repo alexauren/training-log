@@ -12,13 +12,17 @@ import java.util.List;
 
 public class FileHandler implements FileHandlerInterface {
 
+    private ArrayList<Workout> workouts;
+    private Workout workout;
+
     @Override
     public void writeToFile(List<Workout> workouts) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\resources\\traininglog\\TrainingLog.txt"));
         workouts.stream().forEach(workout -> {
             try {
                 writer.write(workout.workoutToFile());
-            } catch (IOException e) {
+            } 
+            catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -27,7 +31,7 @@ public class FileHandler implements FileHandlerInterface {
 
     @Override
     public ArrayList<Workout> readFromFile() throws IOException {
-        ArrayList<Workout> workouts = new ArrayList<>();
+        workouts = new ArrayList<>();
         File file = new File("src\\main\\resources\\traininglog\\TrainingLog.txt");
         BufferedReader reader;
         reader = new BufferedReader(new FileReader(file));
@@ -41,12 +45,26 @@ public class FileHandler implements FileHandlerInterface {
     }
 
     private Workout stringToWorkout(String s) {
+
         List<String> strings = new ArrayList<String>(Arrays.asList(s.split(",")));
-        Workout workout = new Workout((strings).get(0), strings.get(1));
-        for (int i = 2; i < strings.size(); i += 3) {
-            Exercise exercise = new Exercise(strings.get(i), Integer.parseInt(strings.get(i + 1)),
-                    Integer.parseInt(strings.get(i + 2)));
-            workout.addExercise(exercise);
+
+        if (strings.get(0).equals("Running")) {
+            workout = new RunningWorkout((strings).get(1), strings.get(2), Double.parseDouble(strings.get(3)));
+            
+            for (int i = 4; i < strings.size(); i += 3) {
+                Exercise exercise = new Exercise(strings.get(i), Integer.parseInt(strings.get(i + 1)),
+                        Integer.parseInt(strings.get(i + 2)));
+                workout.addExercise(exercise);
+            }
+        }
+        else {
+            workout = new OtherWorkout((strings).get(0), strings.get(1));
+            
+            for (int i = 2; i < strings.size(); i += 3) {
+                Exercise exercise = new Exercise(strings.get(i), Integer.parseInt(strings.get(i + 1)),
+                        Integer.parseInt(strings.get(i + 2)));
+                workout.addExercise(exercise);
+            }
         }
         return workout;
     }

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.util.List;
 
-public class Workout {
+public abstract class Workout {
 
     private String name;
-    private Collection<Exercise> exercises = new ArrayList<>();
+    protected Collection<Exercise> exercises = new ArrayList<>();
     private String date;
 
     public Workout(String name, String date) {
@@ -61,9 +61,7 @@ public class Workout {
         return date;
     }
 
-    public void addExercise(Exercise exercise) {
-        exercises.add(exercise);
-    }
+    public abstract void addExercise(Exercise exercise);
 
     public int getTime() {
         return this.getExercises().stream().mapToInt(e -> e.getTime()).sum();
@@ -75,13 +73,8 @@ public class Workout {
                 / this.getExercises().size();
     }
 
-    public Collection<Exercise> getExercises() {
+    public List<Exercise> getExercises() {
         return new ArrayList<Exercise>(exercises);
-    }
-
-    @Override
-    public String toString() {
-        return this.getDate() + ":  " + this.getName();
     }
 
     public String extendedToString() {
@@ -91,18 +84,14 @@ public class Workout {
             tmpExercises += exercise.toString() + "\n";
         }
         String tmpString = new String(
-            "Name: " + name + ", " +
-            "Date: " + date +
+            this.toString() +
             "\n\n" + tmpExercises + "\n" +
             "Total time spent: " + this.getTime());
 
         return tmpString;
     }
 
-    public String workoutToFile() {
-        String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
-        return this.getName() + "," + this.getDate() + "," + tmpExercises + "\n";
-    }
+    public abstract String workoutToFile();
 
     private int getYear() {
         return Integer.parseInt(this.getDate().substring(6));

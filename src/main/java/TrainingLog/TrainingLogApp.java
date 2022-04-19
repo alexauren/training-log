@@ -21,5 +21,5 @@ public class TrainingLogApp extends Application {
 		primaryStage.setScene(new Scene(parent));
 		primaryStage.show();
 	}
-	
+	 
 }

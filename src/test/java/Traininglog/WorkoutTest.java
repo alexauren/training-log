@@ -9,9 +9,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import traininglog.Exercise;
+import traininglog.OtherWorkout;
 import traininglog.Workout;
 
 public class WorkoutTest {
+
+    /* Tester alle metoder som er felles for RunningWorkout og OtherWorkout 
+    (altå de som er definert i den abstrakte Workout-klassen). 
+    Har brukt OtherWorkout gjennom testen for enkelhets skyld, men siden det er felles metoder som testes, 
+    ville det gitt samme resultet som å bruke RunningWorkout. */
     
     private Workout w1, w2, w3, w4, w5;
     private Exercise e1, e2;
@@ -19,11 +25,11 @@ public class WorkoutTest {
 
     @BeforeEach
     public void setup() {
-        w1 = new Workout("Strength", "11.04.2021");
-        w2 = new Workout("Cardio", "10.05.2021");
-        w3 = new Workout("Cross-fit", "09.04.2022");
-        w4 = new Workout("Strength", "11.05.2021");
-        w5 = new Workout("Cardio", "11.04.2021");
+        w1 = new OtherWorkout("Strength", "11.04.2021");
+        w2 = new OtherWorkout("Cardio", "10.05.2021");
+        w3 = new OtherWorkout("Cross-fit", "09.04.2022");
+        w4 = new OtherWorkout("Strength", "11.05.2021");
+        w5 = new OtherWorkout("Cardio", "11.04.2021");
 
         e1 = new Exercise("Squat", 10 ,10);
         e2 = new Exercise("Deadlift", 15, 8);
@@ -41,10 +47,10 @@ public class WorkoutTest {
     @DisplayName("Test name validation")
     public void testName() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("", "11.04.2022");
+			new OtherWorkout("", "11.04.2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("1234567890123456", "11.04.2022");
+			new OtherWorkout("1234567890123456", "11.04.2022");
 		});
     }
 
@@ -52,41 +58,30 @@ public class WorkoutTest {
     @DisplayName("Test date validation")
     public void testDate() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "00.04.2022");
+			new OtherWorkout("Strength", "00.04.2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strentgh", "32.04.2022");
+			new OtherWorkout("Strentgh", "32.04.2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "11.13.2022");
+			new OtherWorkout("Strength", "11.13.2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "11.00.2022");
+			new OtherWorkout("Strength", "11.00.2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "11.04.2020");
+			new OtherWorkout("Strength", "11.04.2020");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "11.04.2023");
+			new OtherWorkout("Strength", "11.04.2023");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "11/04/2022");
+			new OtherWorkout("Strength", "11/04/2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Workout("Strength", "11.04.22");
+			new OtherWorkout("Strength", "11.04.22");
 		});
     }
-    
-    @Test
-    @DisplayName("Test addExercise")
-    public void testAddExercises() {
-        w1.addExercise(e1);
-        exercises.add(e1);
-        Assertions.assertEquals(w1.getExercises(), exercises);
-        w1.addExercise(e2);
-        exercises.add(e2);
-        Assertions.assertEquals(w1.getExercises(), exercises);
-    }    
 
     @Test 
     @DisplayName("Test getTime og getAvgIntensity") 
@@ -98,22 +93,6 @@ public class WorkoutTest {
 
         double avgIntensity = (e1.getIntensity() + e2.getIntensity()) / 2;
         Assertions.assertEquals(w1.getAvgIntensity(), avgIntensity);
-    }
-
-    @Test
-    @DisplayName("Test various toString-methods (toString(), extendedToString() and workoutToFile()).")
-    public void testToString() {
-        Assertions.assertEquals(w1.toString(), "11.04.2021:  Strength");
-
-        Assertions.assertEquals(w2.extendedToString(), 
-        "Name: Cardio, Date: 10.05.2021\n\nExercise: Squat, Time: 10, Intensity: 10\nExercise: Deadlift, Time: 15, Intensity: 8\n\nTotal time spent: 25");
-        Assertions.assertEquals(w1.extendedToString(),
-        "Name: Strength, Date: 11.04.2021\n\n\nTotal time spent: 0");
-
-        Assertions.assertEquals(w2.workoutToFile(), 
-        "Cardio,10.05.2021,Squat,10,10,Deadlift,15,8,\n");
-        Assertions.assertEquals(w1.workoutToFile(),
-        "Strength,11.04.2021,\n");
     }
 
     @Test

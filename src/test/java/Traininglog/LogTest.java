@@ -10,13 +10,15 @@ import org.junit.jupiter.api.Test;
 
 import traininglog.Exercise;
 import traininglog.Log;
+import traininglog.OtherWorkout;
+import traininglog.RunningWorkout;
 import traininglog.Workout;
 
 public class LogTest {
 
     private Log log, emptyLog;
     private Workout w1, w2, w3, w4;
-    private Exercise e1, e2, e3;
+    private Exercise e1, e2, e3, e4;
     private List<Workout> workoutList;
 
 
@@ -28,16 +30,17 @@ public class LogTest {
         e1 = new Exercise("Squat", 10, 5);
         e2 = new Exercise("Deadlift", 15, 8);
         e3 = new Exercise("Bench press", 20, 9);
+        e4 = new Exercise("Running", 50, 7);
 
-        w1 = new Workout("Strength", "11.04.2021");
-        w2 = new Workout("Back", "12.04.2021");
-        w3 = new Workout("Legs", "10.05.2022");
-        w4 = new Workout("Empty workout", "10.10.2022");
+        w1 = new OtherWorkout("Strength", "11.04.2021");
+        w2 = new OtherWorkout("Crossfit", "12.04.2021");
+        w3 = new RunningWorkout("Long run", "10.05.2022", 10);
+        w4 = new OtherWorkout("Empty workout", "10.10.2022");
 
         w1.addExercise(e1);
+        w2.addExercise(e1);
         w2.addExercise(e2);
-        w3.addExercise(e1);
-        w3.addExercise(e2);
+        w3.addExercise(e4);
 
         log.addWorkout(w1);
         log.addWorkout(w2);
@@ -49,7 +52,8 @@ public class LogTest {
     @DisplayName("Test addWorkout and getWorkoutList(datesort).")
     @Test
     public void testAddWorkout() {
-        Assertions.assertThrows(IllegalStateException.class, () -> log.addWorkout(w4));
+        Assertions.assertThrows(IllegalStateException.class, () -> log.addWorkout(w4), 
+        "Should throw exception when trying to add an empty workout.");
 
         workoutList.add(w1);
         emptyLog.addWorkout(w1);

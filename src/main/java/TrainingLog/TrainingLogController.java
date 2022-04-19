@@ -21,15 +21,15 @@ public class TrainingLogController {
     @FXML 
     private ListView<Workout> workoutList;
     @FXML
-    private Button addWorkoutButton, removeWorkoutButton, saveLogButton, loadLogButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, exitChartButton, intensityCoachButton;
+    private Button addWorkoutButton, removeWorkoutButton, saveLogButton, loadLogButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, newWorkoutButton2, exitChartButton, intensityCoachButton;
     @FXML
-    private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice;
+    private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice, distanceText;
     @FXML 
-    private TextField title, date, exercise, intensity, time;
+    private TextField title, date, exercise, intensity, time, distanceInput;
     @FXML 
     private AnchorPane newWorkoutBackground, logBackground, intensityData;
     @FXML 
-    private RadioButton dateButton, timeButton;
+    private RadioButton dateButton, timeButton, runningWorkoutButton, otherWorkoutButton;
     @FXML 
     private CategoryAxis xAxis;
     @FXML 
@@ -39,7 +39,8 @@ public class TrainingLogController {
 
     private Log log;
     private Workout workout;
-    private boolean dateSort;
+    private boolean dateSort; 
+    private boolean workoutType = true;
     private FileHandler fileHandler = new FileHandler();
     
     @FXML 
@@ -52,6 +53,8 @@ public class TrainingLogController {
         totalTime.setText("0h:0m");
         workoutList.setStyle("-fx-font-family: 'monospaced'");
         dateSort = true;
+        runningWorkoutButton.setSelected(false);
+        otherWorkoutButton.setSelected(true);
     }
 
     private void updateView() {
@@ -103,7 +106,7 @@ public class TrainingLogController {
             updateView();
             newWorkoutBackground.setVisible(false);
         }
-        catch(IllegalStateException e) {
+        catch (IllegalStateException e) {
             errorTextNewWorkout.setText(e.getMessage());
         }
     }
@@ -114,14 +117,39 @@ public class TrainingLogController {
         intensity.clear();
     }
 
+
+    @FXML
+    private void handleWorkoutTypeButton() {
+        if (otherWorkoutButton.isSelected()) {
+            workoutType = true;
+            distanceText.setVisible(false);
+            distanceInput.setVisible(false);
+            distanceInput.clear();
+            newWorkoutButton2.setVisible(false);
+            newWorkoutButton.setVisible(true);
+        }
+        else {
+            workoutType = false;
+            distanceText.setVisible(true);
+            distanceInput.setVisible(true);
+            newWorkoutButton.setVisible(false);
+            newWorkoutButton2.setVisible(true);
+        }
+    }
+
     @FXML
     private void initializeWorkout() {
         try {
-        workout = new Workout(title.getText(), date.getText());
-        updateEnabledFields(false);
-        errorTextNewWorkout.setText(null);
+            if (workoutType) {
+                workout = new OtherWorkout(title.getText(), date.getText());
+            }
+            else {
+                workout = new RunningWorkout(title.getText(), date.getText(), Double.parseDouble(distanceInput.getText()));
+            }
+            updateEnabledFields(false);
+            errorTextNewWorkout.setText(null);
         }
-        catch (IllegalArgumentException e) {
+        catch (Exception e) {
             handleAddWorkout();
             errorTextNewWorkout.setText(e.getMessage());
         } 
