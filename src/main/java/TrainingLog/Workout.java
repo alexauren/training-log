@@ -2,14 +2,13 @@ package traininglog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
 public abstract class Workout {
 
     private String name;
-    protected Collection<Exercise> exercises = new ArrayList<>();
+    protected List<Exercise> exercises = new ArrayList<>();
     private String date;
 
     public Workout(String name, String date) {
@@ -114,9 +113,9 @@ public abstract class Workout {
         } 
         else {
             return o1.getDay() - o2.getDay();
-        }
+        }   
     };
 
-    public static Comparator<Workout> workoutComparatorTime = (o1, o2) -> (int) o1.getTime() - o2.getTime();
+    public static Comparator<Workout> workoutComparatorIntensity = (o1, o2) -> (int) o1.getAvgIntensity() - (int)o2.getAvgIntensity();
 
 }

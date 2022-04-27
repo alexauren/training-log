@@ -35,7 +35,5 @@ public class RunningWorkout extends Workout {
     public String workoutToFile() {
         String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
         return "Running" + "," + this.getName() + "," + this.getDate() + "," + this.getDistance() + "," +  tmpExercises + "\n";
-    }
-    
-    
+    }  
 }

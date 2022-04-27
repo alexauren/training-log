@@ -1,4 +1,1 @@
-Running,Long run,02.03.2022,10.0,Run,50,6,
-Strength,03.03.2022,Squat,10,8,Deadlift,15,7,
-Running,4x4 intervals,05.03.2022,8.0,Run,30,8,
-Chest,01.04.2022,Bench,10,8,Dips,15,7,Flies,20,9,
+k,04.04.2022,k,9,9,

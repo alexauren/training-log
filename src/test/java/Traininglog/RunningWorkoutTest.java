@@ -52,11 +52,13 @@ public class RunningWorkoutTest {
         exercises.add(e1);
         Assertions.assertEquals(w1.getExercises(), exercises);
         
+        Assertions.assertThrows(IllegalStateException.class, () -> w1.addExercise(e1));        
         Assertions.assertThrows(IllegalStateException.class, () -> w1.addExercise(e2));        
+
     }    
     
     @Test
-    @DisplayName("Test various toString-methods (toString(), extendedToString() and workoutToFile()).")
+    @DisplayName("Test various toString-methods (toString, extendedToString and workoutToFile).")
     public void testToString() {
         Assertions.assertEquals(w1.toString(), "11.04.2021: Long Run, 10.0km");
 

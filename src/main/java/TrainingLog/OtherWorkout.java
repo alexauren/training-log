@@ -15,7 +15,7 @@ public class OtherWorkout extends Workout {
 
     @Override
     public String toString() {
-        return this.getDate() + ":  " + this.getName();
+        return this.getDate() + ": " + this.getName();
     }
 
     @Override
@@ -23,4 +23,6 @@ public class OtherWorkout extends Workout {
         String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
         return this.getName() + "," + this.getDate() + "," + tmpExercises + "\n";
     }
+
+    
 }

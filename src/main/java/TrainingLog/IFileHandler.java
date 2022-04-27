@@ -3,7 +3,7 @@ package traininglog;
 import java.io.IOException;
 import java.util.List;
 
-public interface FileHandlerInterface {
+public interface IFileHandler {
     
     public List<Workout> readFromFile() throws IOException;
 

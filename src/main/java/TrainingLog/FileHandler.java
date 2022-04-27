@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileHandler implements FileHandlerInterface {
+public class FileHandler implements IFileHandler {
 
     private ArrayList<Workout> workouts;
     private Workout workout;
 
     @Override
     public void writeToFile(List<Workout> workouts) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\resources\\traininglog\\TrainingLog.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/traininglog/TrainingLog.txt"));
         workouts.stream().forEach(workout -> {
             try {
                 writer.write(workout.workoutToFile());
@@ -32,7 +32,7 @@ public class FileHandler implements FileHandlerInterface {
     @Override
     public ArrayList<Workout> readFromFile() throws IOException {
         workouts = new ArrayList<>();
-        File file = new File("src\\main\\resources\\traininglog\\TrainingLog.txt");
+        File file = new File("src/main/resources/traininglog/TrainingLog.txt");
         BufferedReader reader;
         reader = new BufferedReader(new FileReader(file));
         String s;

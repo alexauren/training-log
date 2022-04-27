@@ -56,11 +56,12 @@ public class FileHandlerTest {
     @DisplayName("This method tests that the FileHandler loads the same object it saved.")
     public void testFileHandler() throws IOException {
         Log actualLog = new Log();
-        fileHandler.writeToFile(expectedLog.getWorkoutList(true));
-        actualLog.setWorkouts(fileHandler.readFromFile());
+        expectedLog.logToFile();
+        actualLog.fileToLog();
        
         //Hvorfor funker ikke denne?
         //Assertions.assertEquals(expectedLog.getWorkoutList(true), actualLog.getWorkoutList(true));
+        
 
         for (int i = 0; i < expectedLog.getWorkoutList(true).size(); i++) {
             Assertions.assertEquals(

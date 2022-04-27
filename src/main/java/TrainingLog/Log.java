@@ -1,5 +1,6 @@
 package traininglog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +10,7 @@ public class Log {
 
     private Collection<Workout> workouts = new ArrayList<Workout>();
     private int totalTime;
+    private FileHandler fileHandler = new FileHandler();
 
     public void addWorkout(Workout workout) {
         if (workout.getExercises().size() > 0) {
@@ -41,7 +43,7 @@ public class Log {
             workoutsCopy.sort(Workout.workoutComparatorDate);
         }
         else {
-            workoutsCopy.sort(Workout.workoutComparatorTime);
+            workoutsCopy.sort(Workout.workoutComparatorIntensity);
         }
         return workoutsCopy;
     }
@@ -62,6 +64,18 @@ public class Log {
             advice = "Your average training intensity is " + avgString + ", which is within the optimal range.";
         }
         return advice;
+    }
+
+    public double getDistanceCount() {
+         return workouts.stream().filter(w -> w instanceof RunningWorkout).mapToDouble(w -> ((RunningWorkout) w).getDistance()).sum();
+    }
+
+    public void logToFile() throws IOException {
+        fileHandler.writeToFile(this.getWorkoutList(true));
+    }
+
+    public void fileToLog() throws IOException {
+        this.setWorkouts(fileHandler.readFromFile());
     }
 
 }

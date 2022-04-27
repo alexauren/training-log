@@ -50,4 +50,5 @@ public class Exercise {
     public String exerciseTofile() {
         return name + "," + time + "," + intensity + ",";
     }
+
 }

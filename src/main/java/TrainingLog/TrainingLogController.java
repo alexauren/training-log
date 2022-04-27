@@ -21,15 +21,15 @@ public class TrainingLogController {
     @FXML 
     private ListView<Workout> workoutList;
     @FXML
-    private Button addWorkoutButton, removeWorkoutButton, saveLogButton, loadLogButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, newWorkoutButton2, exitChartButton, intensityCoachButton;
+    private Button addWorkoutButton, removeWorkoutButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, newWorkoutButton2, exitChartButton, intensityCoachButton;
     @FXML
-    private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice, distanceText;
+    private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice, distanceText, distanceCount;
     @FXML 
     private TextField title, date, exercise, intensity, time, distanceInput;
     @FXML 
     private AnchorPane newWorkoutBackground, logBackground, intensityData;
     @FXML 
-    private RadioButton dateButton, timeButton, runningWorkoutButton, otherWorkoutButton;
+    private RadioButton dateButton, intensityButton, runningWorkoutButton, otherWorkoutButton;
     @FXML 
     private CategoryAxis xAxis;
     @FXML 
@@ -55,17 +55,31 @@ public class TrainingLogController {
         dateSort = true;
         runningWorkoutButton.setSelected(false);
         otherWorkoutButton.setSelected(true);
+        try {
+            log.fileToLog();
+        }
+        catch (IOException e) {
+            errorText.setText("Error loading file.");
+        }
+        updateView();
     }
 
     private void updateView() {
         try {
             totalTime.setText(log.getTotalTime());
+            distanceCount.setText(Double.toString(log.getDistanceCount()));
+            log.logToFile();
             workoutList.getItems().setAll(log.getWorkoutList(dateSort));
         }
         catch (NullPointerException e) {
             workoutList.getItems().setAll(new ArrayList<>());
             totalTime.setText("0h:0m");
+            distanceCount.setText("0");
         }
+        catch (IOException e) {
+            errorText.setText("Error reading file");
+        }
+
         
         workout = null;
         removeWorkoutButton.setDisable(true);
@@ -81,6 +95,7 @@ public class TrainingLogController {
         updateEnabledFields(true);
         title.clear();
         date.clear();
+        distanceInput.clear();
     }
 
     private void updateEnabledFields(boolean b) {
@@ -103,11 +118,15 @@ public class TrainingLogController {
     private void handleSaveWorkout() {
         try {
             log.addWorkout(workout);
+            fileHandler.writeToFile(log.getWorkoutList(true));
             updateView();
             newWorkoutBackground.setVisible(false);
         }
         catch (IllegalStateException e) {
             errorTextNewWorkout.setText(e.getMessage());
+        }
+        catch (IOException e) {
+            errorTextNewWorkout.setText("Error with autosaving file");
         }
     }
  
@@ -218,26 +237,5 @@ public class TrainingLogController {
         });
 
         intensityChart.getData().add(intensitySeries);
-    }
-
-    @FXML
-    private void saveLog() {
-        try {
-            fileHandler.writeToFile(log.getWorkoutList(true));
-            errorText.setStyle("-fx-fill:#03cc00");
-            errorText.setText("File saved successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void loadLog() {
-        try {
-            log.setWorkouts(fileHandler.readFromFile());;
-            updateView();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

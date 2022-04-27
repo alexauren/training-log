@@ -1,6 +1,5 @@
 package Traininglog;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +32,7 @@ public class WorkoutTest {
 
         e1 = new Exercise("Squat", 10 ,10);
         e2 = new Exercise("Deadlift", 15, 8);
-        exercises  = new ArrayList<>();
+        
         w2.addExercise(e1);
         w2.addExercise(e2);
         w3.addExercise(e1);
@@ -79,6 +78,12 @@ public class WorkoutTest {
 			new OtherWorkout("Strength", "11/04/2022");
 		});
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new OtherWorkout("Strength", "11042022");
+		});
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new OtherWorkout("Strength", "11 04 2022");
+		});
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11.04.22");
 		});
     }
@@ -93,6 +98,9 @@ public class WorkoutTest {
 
         double avgIntensity = (e1.getIntensity() + e2.getIntensity()) / 2;
         Assertions.assertEquals(w1.getAvgIntensity(), avgIntensity);
+        avgIntensity = e1.getIntensity();
+        Assertions.assertEquals(w3.getAvgIntensity(), avgIntensity);
+
     }
 
     @Test
@@ -108,11 +116,11 @@ public class WorkoutTest {
     @Test
     @DisplayName("Test time comparator")
     public void testTimeComparator() {
-        Assertions.assertTrue(Workout.workoutComparatorTime.compare(w1, w2) < 0);
-        Assertions.assertTrue(Workout.workoutComparatorTime.compare(w2, w3) > 0);
-        Assertions.assertTrue(Workout.workoutComparatorTime.compare(w3, w4) < 0);
-        Assertions.assertTrue(Workout.workoutComparatorTime.compare(w5, w2) == 0);
-        Assertions.assertTrue(Workout.workoutComparatorTime.compare(w1, w1) == 0);  
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w1, w2) < 0);
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w2, w3) > 0);
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w3, w4) < 0);
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w5, w2) == 0);
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w1, w1) == 0);  
     }
 
 }

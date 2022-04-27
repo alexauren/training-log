@@ -17,7 +17,7 @@ import traininglog.Workout;
 public class LogTest {
 
     private Log log, emptyLog;
-    private Workout w1, w2, w3, w4;
+    private Workout w1, w2, w3, w4, w5;
     private Exercise e1, e2, e3, e4;
     private List<Workout> workoutList;
 
@@ -36,11 +36,13 @@ public class LogTest {
         w2 = new OtherWorkout("Crossfit", "12.04.2021");
         w3 = new RunningWorkout("Long run", "10.05.2022", 10);
         w4 = new OtherWorkout("Empty workout", "10.10.2022");
+        w5 = new RunningWorkout("Intervals", "10.06.2022", 8.5);
 
         w1.addExercise(e1);
         w2.addExercise(e1);
         w2.addExercise(e2);
         w3.addExercise(e4);
+        w5.addExercise(e4);
 
         log.addWorkout(w1);
         log.addWorkout(w2);
@@ -64,7 +66,7 @@ public class LogTest {
         workoutList.sort(Workout.workoutComparatorDate);
         Assertions.assertEquals(log.getWorkoutList(true), workoutList);
 
-        workoutList.sort(Workout.workoutComparatorTime);
+        workoutList.sort(Workout.workoutComparatorIntensity);
         Assertions.assertEquals(log.getWorkoutList(false), workoutList);   
     }
 
@@ -117,6 +119,15 @@ public class LogTest {
         lowIntensity.addWorkout(w1);
         Assertions.assertEquals(lowIntensity.getIntensityAdvice(),
         "Your average training intensity is " + getExpectedIntensityAdvice(lowIntensity) + ". You should consider training harder if you want more gains.");
+    }
+
+    @DisplayName("Test distance count")
+    @Test 
+    public void testDistanceCount() {
+        Assertions.assertEquals(log.getDistanceCount(), 10.0);
+        log.addWorkout(w5);
+        Assertions.assertEquals(log.getDistanceCount(), 18.5);
+        Assertions.assertEquals(emptyLog.getDistanceCount(), 0.0);
     }
 
 }
