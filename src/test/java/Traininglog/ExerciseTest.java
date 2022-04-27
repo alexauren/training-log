@@ -21,22 +21,28 @@ public class ExerciseTest {
     public void testConstructor() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Exercise("Long run", 0, 8);
-		});
+		}, "Time must be 1-180");
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Exercise("Long run", 10, 0);
-		});
+		}, "intensity must be 1-10");
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Exercise("Long run", 181, 8);
-		});
+		}, "Time must be 1-180");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Exercise("Long run", 10, 11);
-		});
+		}, "Intensity must be 1-10");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Exercise("1234567890123456", 0, 8);
-		});
+			new Exercise("1234567890123456", 10, 8);
+		}, "Name cannot be 1-15 chars");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Exercise("", 0, 8);
-		});
+		}, "Name must be 1-15 chars");
+        
+        e1 = new Exercise("Squat", 180, 10);
+        e1 = new Exercise("Squat", 1, 1);
     }
 
     @Test

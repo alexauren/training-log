@@ -35,5 +35,33 @@ public class RunningWorkout extends Workout {
     public String workoutToFile() {
         String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
         return "Running" + "," + this.getName() + "," + this.getDate() + "," + this.getDistance() + "," +  tmpExercises + "\n";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(distance);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj))
+            return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        RunningWorkout other = (RunningWorkout) obj;
+        if (Double.doubleToLongBits(distance) != Double.doubleToLongBits(other.distance))
+            return false;
+        return true;
     }  
+
+    
 }

@@ -52,8 +52,10 @@ public class RunningWorkoutTest {
         exercises.add(e1);
         Assertions.assertEquals(w1.getExercises(), exercises);
         
-        Assertions.assertThrows(IllegalStateException.class, () -> w1.addExercise(e1));        
-        Assertions.assertThrows(IllegalStateException.class, () -> w1.addExercise(e2));        
+        Assertions.assertThrows(IllegalStateException.class, () -> w1.addExercise(e1), 
+        "RunningWorkouts can only contain one exercise.");        
+        Assertions.assertThrows(IllegalStateException.class, () -> w1.addExercise(e2), 
+        "RunningWorkouts can only contain one exercise.");        
 
     }    
     

@@ -59,15 +59,22 @@ public class LogTest {
 
         workoutList.add(w1);
         emptyLog.addWorkout(w1);
-        Assertions.assertEquals(emptyLog.getWorkoutList(true), workoutList);
+        Assertions.assertEquals(emptyLog.getWorkoutList(true), workoutList, 
+        "addWorkout should add a workout to the Log.");
 
         workoutList.add(w2);
         workoutList.add(w3);
         workoutList.sort(Workout.workoutComparatorDate);
-        Assertions.assertEquals(log.getWorkoutList(true), workoutList);
+        Assertions.assertEquals(log.getWorkoutList(true), workoutList,
+        "Log should contain w1, w2 and w3.");
 
         workoutList.sort(Workout.workoutComparatorIntensity);
-        Assertions.assertEquals(log.getWorkoutList(false), workoutList);   
+        Assertions.assertEquals(log.getWorkoutList(false), workoutList,
+        "log.getWorkoutList(false) should be sorted by time, not by date.");   
+
+        workoutList.sort(Workout.workoutComparatorDate);
+        Assertions.assertEquals(log.getWorkoutList(true), workoutList,
+        "log.getWorkoutList(true) should be sorted by date, not by time.");   
     }
 
     @DisplayName("Test removeWorkout")
@@ -78,9 +85,11 @@ public class LogTest {
         workoutList.sort(Workout.workoutComparatorDate);
         Assertions.assertNotEquals(workoutList, log.getWorkoutList(true));
         log.removeWorkout(w3);
-        Assertions.assertEquals(workoutList, log.getWorkoutList(true));
+        Assertions.assertEquals(workoutList, log.getWorkoutList(true), 
+        "log.removeWorkout(w) should remove workkout w from log.");
 
-        Assertions.assertThrows(IllegalStateException.class, () -> log.removeWorkout(w3));
+        Assertions.assertThrows(IllegalStateException.class, () -> log.removeWorkout(w3),
+        "Cannot remove a workout that's not in the log.");
     }
 
     @DisplayName("Test getTotalTime")
@@ -126,8 +135,10 @@ public class LogTest {
     public void testDistanceCount() {
         Assertions.assertEquals(log.getDistanceCount(), 10.0);
         log.addWorkout(w5);
-        Assertions.assertEquals(log.getDistanceCount(), 18.5);
-        Assertions.assertEquals(emptyLog.getDistanceCount(), 0.0);
+        Assertions.assertEquals(log.getDistanceCount(), 18.5, 
+        "Distance should be uppdated when a workout is added.");
+        Assertions.assertEquals(emptyLog.getDistanceCount(), 0.0, 
+        "Distance of an empty log should be 0.");
     }
 
 }

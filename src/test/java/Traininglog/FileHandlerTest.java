@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import traininglog.Exercise;
-import traininglog.FileHandler;
 import traininglog.Log;
 import traininglog.OtherWorkout;
 import traininglog.RunningWorkout;
@@ -22,13 +21,12 @@ public class FileHandlerTest {
     private Workout w1, w2, w3;
     private Log expectedLog = new Log();
     private static Log oldLog = new Log();
-    private static FileHandler fileHandler = new FileHandler();
     
         
     @DisplayName("This method saves the pre-saved file so it can be restored after the tests.")
     @BeforeAll    
     public static void saveOldLog() throws IOException {
-        oldLog.setWorkouts(fileHandler.readFromFile());
+        oldLog.logToFile();
     }
 
     @BeforeEach
@@ -59,9 +57,23 @@ public class FileHandlerTest {
         expectedLog.logToFile();
         actualLog.fileToLog();
        
-        //Hvorfor funker ikke denne?
-        //Assertions.assertEquals(expectedLog.getWorkoutList(true), actualLog.getWorkoutList(true));
-        
+        Assertions.assertEquals(expectedLog, actualLog, 
+        "the data in to the file must be the same as the data out from the file.");
+
+        /* Assertions.assertEquals(expectedLog.getWorkoutList(true), actualLog.getWorkoutList(true));
+        for (int i = 0; i < expectedLog.getWorkoutList(true).size(); i++) {
+            Assertions.assertEquals(
+                expectedLog.getWorkoutList(true).get(i), 
+                actualLog.getWorkoutList(true).get(i),
+                "Expected workouts must match actual workouts.");
+            
+            for (int j = 0; j < expectedLog.getWorkoutList(true).get(i).getExercises().size(); j++) {
+                Assertions.assertEquals(
+                expectedLog.getWorkoutList(true).get(i).getExercises().get(j), 
+                actualLog.getWorkoutList(true).get(i).getExercises().get(j),
+                "Expected exercises must match the actual exercises.");
+            }
+        }
 
         for (int i = 0; i < expectedLog.getWorkoutList(true).size(); i++) {
             Assertions.assertEquals(
@@ -74,14 +86,14 @@ public class FileHandlerTest {
                 expectedLog.getWorkoutList(true).get(i).getExercises().get(j).toString(), 
                 actualLog.getWorkoutList(true).get(i).getExercises().get(j).toString(),
                 "Expected exercises must match the actual exercises.");
-            }
-        }
-    }
+            } 
+        } */
+    } 
     
     @AfterAll
     @DisplayName("This method restores the old content on the .txt-file.")
     public static void restoreOldFile() throws IOException {
-        fileHandler.writeToFile(oldLog.getWorkoutList(true));
+        oldLog.logToFile();
     }
 
 }

@@ -34,9 +34,11 @@ public class OtherWorkoutTest {
     @DisplayName("Test addExercise")
     public void testAddExercises() {
         Assertions.assertEquals(w1.getExercises(), exercises);
+        
         w1.addExercise(e1);
         exercises.add(e1);
         Assertions.assertEquals(w1.getExercises(), exercises);
+        
         w1.addExercise(e2);
         exercises.add(e2);
         Assertions.assertEquals(w1.getExercises(), exercises);

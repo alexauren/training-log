@@ -47,10 +47,10 @@ public class WorkoutTest {
     public void testName() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("", "11.04.2022");
-		});
+		}, "Name must be 1-15 chars.");
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("1234567890123456", "11.04.2022");
-		});
+		}, "Name must be 1-15 chars.");
     }
 
     @Test
@@ -58,34 +58,43 @@ public class WorkoutTest {
     public void testDate() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "00.04.2022");
-		});
+		}, "Day must be 1-31.");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strentgh", "32.04.2022");
-		});
+		}, "Day must be 1-31.");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11.13.2022");
-		});
+		}, "Month must be 1-12.");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11.00.2022");
-		});
+		}, "Month must be 1-12.");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11.04.2020");
-		});
+		}, "Year must be either this year or last year.");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11.04.2023");
-		});
+		}, "Year must be either this year or last year.");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11/04/2022");
-		});
+		}, "Date must be on the format dd.mm.yyy");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11042022");
-		});
+		}, "Date must be on the format dd.mm.yyy");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11 04 2022");
-		});
+		}, "Date must be on the format dd.mm.yyy");
+        
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new OtherWorkout("Strength", "11.04.22");
-		});
+		}, "Date must be on the format dd.mm.yyy");
     }
 
     @Test 
@@ -114,13 +123,15 @@ public class WorkoutTest {
     }
 
     @Test
-    @DisplayName("Test time comparator")
-    public void testTimeComparator() {
+    @DisplayName("Test intensity comparator")
+    public void testIntensityComparator() {
         Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w1, w2) < 0);
-        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w2, w3) > 0);
-        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w3, w4) < 0);
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w3, w2) > 0);
+        Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w3, w4) > 0);
         Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w5, w2) == 0);
         Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w1, w1) == 0);  
     }
+
+    
 
 }
