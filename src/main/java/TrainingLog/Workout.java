@@ -85,7 +85,7 @@ public abstract class Workout {
         String tmpString = new String(
             this.toString() +
             "\n\n" + tmpExercises + "\n" +
-            "Total time spent: " + this.getTime());
+            "Total time spent: " + this.getTime() + " minutes.");
 
         return tmpString;
     }
@@ -116,7 +116,8 @@ public abstract class Workout {
         }   
     };
 
-    public static Comparator<Workout> workoutComparatorIntensity = (o1, o2) -> (int) o1.getAvgIntensity() - (int)o2.getAvgIntensity();
+    public static Comparator<Workout> workoutComparatorIntensity = (o1, o2) 
+            -> (int) o1.getAvgIntensity() - (int)o2.getAvgIntensity();
 
     @Override
     public int hashCode() {

@@ -1,0 +1,4 @@
+Running,New Year Run,01.01.2021,11.0,Run,60,6,
+Strength upper,03.04.2022,Bench press,15,8,Bent over row,10,9,
+Running,4x4 intervals,03.08.2022,7.0,Intervals,30,9,
+Strength lower,06.08.2022,Squat,20,7,Deadlift,25,9,Lunges,10,6,

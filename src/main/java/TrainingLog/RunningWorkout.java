@@ -11,7 +11,7 @@ public class RunningWorkout extends Workout {
         if (distance > 0 && distance < 50) {
         this.distance = distance;
         }
-        else throw new IllegalArgumentException("Distance must be between 0-50");
+        else throw new IllegalArgumentException("Distance must be a number from 1-50");
     } 
 
     @Override 

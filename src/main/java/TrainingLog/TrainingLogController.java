@@ -41,7 +41,6 @@ public class TrainingLogController {
     private Workout workout;
     private boolean dateSort; 
     private boolean workoutType = true;
-    private FileHandler fileHandler = new FileHandler();
     
     @FXML 
     private void initialize() {
@@ -106,6 +105,10 @@ public class TrainingLogController {
         date.setDisable(!b);
         title.setDisable(!b);
         newWorkoutButton.setDisable(!b);
+        newWorkoutButton2.setDisable(!b);
+        distanceInput.setDisable(!b);
+        runningWorkoutButton.setDisable(!b);
+        otherWorkoutButton.setDisable(!b);
         }
 
     @FXML
@@ -118,7 +121,7 @@ public class TrainingLogController {
     private void handleSaveWorkout() {
         try {
             log.addWorkout(workout);
-            fileHandler.writeToFile(log.getWorkoutList(true));
+            log.logToFile();
             updateView();
             newWorkoutBackground.setVisible(false);
         }
@@ -168,10 +171,15 @@ public class TrainingLogController {
             updateEnabledFields(false);
             errorTextNewWorkout.setText(null);
         }
+        catch (NullPointerException | NumberFormatException e) {
+            handleAddWorkout();
+            errorTextNewWorkout.setText("Distance must be a number from 1-50.");
+        }
         catch (Exception e) {
             handleAddWorkout();
             errorTextNewWorkout.setText(e.getMessage());
         } 
+        
     }
 
     @FXML 
