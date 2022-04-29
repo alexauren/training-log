@@ -69,7 +69,7 @@ public class FileHandlerTest {
     @AfterAll
     @DisplayName("This method restores the old content on the .txt-file.")
     public static void restoreOldFile() throws IOException {
-        oldLog.logToFile();
+        oldLog.fileToLog();
     }
 
 }
