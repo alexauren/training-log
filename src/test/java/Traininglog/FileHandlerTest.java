@@ -56,38 +56,14 @@ public class FileHandlerTest {
         Log actualLog = new Log();
         expectedLog.logToFile();
         actualLog.fileToLog();
-       
         Assertions.assertEquals(expectedLog, actualLog, 
-        "the data in to the file must be the same as the data out from the file.");
-
-        /* Assertions.assertEquals(expectedLog.getWorkoutList(true), actualLog.getWorkoutList(true));
-        for (int i = 0; i < expectedLog.getWorkoutList(true).size(); i++) {
-            Assertions.assertEquals(
-                expectedLog.getWorkoutList(true).get(i), 
-                actualLog.getWorkoutList(true).get(i),
-                "Expected workouts must match actual workouts.");
-            
-            for (int j = 0; j < expectedLog.getWorkoutList(true).get(i).getExercises().size(); j++) {
-                Assertions.assertEquals(
-                expectedLog.getWorkoutList(true).get(i).getExercises().get(j), 
-                actualLog.getWorkoutList(true).get(i).getExercises().get(j),
-                "Expected exercises must match the actual exercises.");
-            }
-        }
-
-        for (int i = 0; i < expectedLog.getWorkoutList(true).size(); i++) {
-            Assertions.assertEquals(
-                expectedLog.getWorkoutList(true).get(i).toString(), 
-                actualLog.getWorkoutList(true).get(i).toString(),
-                "Expected workouts must match actual workouts.");
-            
-            for (int j = 0; j < expectedLog.getWorkoutList(true).get(i).getExercises().size(); j++) {
-                Assertions.assertEquals(
-                expectedLog.getWorkoutList(true).get(i).getExercises().get(j).toString(), 
-                actualLog.getWorkoutList(true).get(i).getExercises().get(j).toString(),
-                "Expected exercises must match the actual exercises.");
-            } 
-        } */
+                "The data in to the file must be the same as the data out from the file.");
+        
+        Log empty = new Log();
+        empty.logToFile();
+        actualLog.fileToLog();
+        Assertions.assertEquals(new Log(), actualLog, 
+                "File handler should work with empty log as Well.");
     } 
     
     @AfterAll

@@ -70,11 +70,11 @@ public class LogTest {
 
         workoutList.sort(Workout.workoutComparatorIntensity);
         Assertions.assertEquals(log.getWorkoutList(false), workoutList,
-        "log.getWorkoutList(false) should be sorted by time, not by date.");   
+        "log.getWorkoutList(false) should be sorted by intensity, not by date.");   
 
         workoutList.sort(Workout.workoutComparatorDate);
         Assertions.assertEquals(log.getWorkoutList(true), workoutList,
-        "log.getWorkoutList(true) should be sorted by date, not by time.");   
+        "log.getWorkoutList(true) should be sorted by date, not by intensity.");   
     }
 
     @DisplayName("Test removeWorkout")
@@ -86,10 +86,10 @@ public class LogTest {
         Assertions.assertNotEquals(workoutList, log.getWorkoutList(true));
         log.removeWorkout(w3);
         Assertions.assertEquals(workoutList, log.getWorkoutList(true), 
-        "log.removeWorkout(w) should remove workkout w from log.");
+                "log.removeWorkout(w) should remove workout w from log.");
 
         Assertions.assertThrows(IllegalStateException.class, () -> log.removeWorkout(w3),
-        "Cannot remove a workout that's not in the log.");
+                "Cannot remove a workout that's not in the log.");
     }
 
     @DisplayName("Test getTotalTime")
@@ -136,9 +136,9 @@ public class LogTest {
         Assertions.assertEquals(log.getDistanceCount(), 10.0);
         log.addWorkout(w5);
         Assertions.assertEquals(log.getDistanceCount(), 18.5, 
-        "Distance should be uppdated when a workout is added.");
+                "Distance should be uppdated when a workout is added.");
         Assertions.assertEquals(emptyLog.getDistanceCount(), 0.0, 
-        "Distance of an empty log should be 0.");
+                "Distance of an empty log should be 0.");
     }
 
 }
