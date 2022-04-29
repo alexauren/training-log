@@ -179,6 +179,8 @@ public class TrainingLogController {
             workout.addExercise(ex);
             resetExerciseInput();
             errorTextNewWorkout.setText(null);
+        } catch (NumberFormatException e) {
+            errorTextNewWorkout.setText("Please add valid exercise parameters");
         } catch (Exception e) {
             errorTextNewWorkout.setText(e.getMessage());
         }
