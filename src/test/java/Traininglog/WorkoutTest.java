@@ -11,11 +11,6 @@ import traininglog.OtherWorkout;
 import traininglog.Workout;
 
 public class WorkoutTest {
-
-    /* Tester alle metoder som er felles for RunningWorkout og OtherWorkout 
-    (altå de som er definert i den abstrakte Workout-klassen). 
-    Har brukt OtherWorkout gjennom testen for enkelhets skyld, men siden det er felles metoder som testes, 
-    ville det gitt samme resultet som å bruke RunningWorkout. */
     
     private Workout w1, w2, w3, w4, w5;
     private Exercise e1, e2;

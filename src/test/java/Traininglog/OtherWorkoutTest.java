@@ -50,9 +50,9 @@ public class OtherWorkoutTest {
         Assertions.assertEquals(w1.toString(), "11.04.2021: Strength");
 
         Assertions.assertEquals(w2.extendedToString(), 
-        "10.05.2021: Cardio\n\nExercise: Squat, Time: 10, Intensity: 10\nExercise: Deadlift, Time: 15, Intensity: 8\n\nTotal time spent: 25");
+        "10.05.2021: Cardio\n\nExercise: Squat, Time: 10, Intensity: 10\nExercise: Deadlift, Time: 15, Intensity: 8\n\nTotal time spent: 25 minutes.");
         Assertions.assertEquals(w1.extendedToString(),
-        "11.04.2021: Strength\n\n\nTotal time spent: 0");
+        "11.04.2021: Strength\n\n\nTotal time spent: 0 minutes.");
 
         Assertions.assertEquals(w2.workoutToFile(), 
         "Cardio,10.05.2021,Squat,10,10,Deadlift,15,8,\n");
