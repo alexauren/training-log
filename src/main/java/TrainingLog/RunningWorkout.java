@@ -37,15 +37,6 @@ public class RunningWorkout extends Workout {
         return "Running" + "," + this.getName() + "," + this.getDate() + "," + this.getDistance() + "," +  tmpExercises + "\n";
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        long temp;
-        temp = Double.doubleToLongBits(distance);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
 
     @Override
     public boolean equals(Object obj) {

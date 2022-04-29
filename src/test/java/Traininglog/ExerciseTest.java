@@ -51,5 +51,15 @@ public class ExerciseTest {
         Assertions.assertEquals("Exercise: Squat, Time: 15, Intensity: 8", e1.toString());
         Assertions.assertEquals("Squat,15,8,", e1.exerciseTofile());
     }
+
+    @Test
+    @DisplayName("Test equals")
+    public void testEquals() {
+        Assertions.assertEquals(e1, new Exercise("Squat", 15, 8));
+        
+        Assertions.assertFalse(e1.equals(new Exercise("Squa", 15, 8)));
+        Assertions.assertFalse(e1.equals(new Exercise("Squat", 16, 8)));
+        Assertions.assertFalse(e1.equals(new Exercise("Squat", 15, 9)));
+    }
 }
 

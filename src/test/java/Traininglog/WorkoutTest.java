@@ -1,6 +1,5 @@
 package Traininglog;
 
-import java.util.Collection;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,6 @@ public class WorkoutTest {
     
     private Workout w1, w2, w3, w4, w5;
     private Exercise e1, e2;
-    Collection<Exercise> exercises;
 
     @BeforeEach
     public void setup() {
@@ -132,6 +130,28 @@ public class WorkoutTest {
         Assertions.assertTrue(Workout.workoutComparatorIntensity.compare(w1, w1) == 0);  
     }
 
-    
+     @Test
+     @DisplayName("Test equals method")
+     public void testEquals() {
+        Workout w6 = new OtherWorkout("Cardio", "10.05.2021");
+        w6.addExercise(e1);
+        w6.addExercise(e2);
+        Assertions.assertEquals(w2, w6);
 
-}
+        w6.addExercise(e2);
+        Assertions.assertFalse(w2.equals(w6));
+        
+        w6 = new OtherWorkout("Cardio", "11.05.2021");
+        w6.addExercise(e1);
+        w6.addExercise(e2);
+        Assertions.assertFalse(w6.equals(w2));
+
+        w6 = new OtherWorkout("CardiB", "10.05.2021");
+        w6.addExercise(e1);
+        w6.addExercise(e2);
+        Assertions.assertFalse(w6.equals(w2));
+
+        w6 = new OtherWorkout("Strength", "11.04.2021");
+        Assertions.assertEquals(w1, w6);
+     }
+    }
