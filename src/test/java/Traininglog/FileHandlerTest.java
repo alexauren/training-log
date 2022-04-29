@@ -26,7 +26,7 @@ public class FileHandlerTest {
     @DisplayName("This method saves the pre-saved file so it can be restored after the tests.")
     @BeforeAll    
     public static void saveOldLog() throws IOException {
-        oldLog.logToFile();
+        oldLog.fileToLog();
     }
 
     @BeforeEach
@@ -69,7 +69,7 @@ public class FileHandlerTest {
     @AfterAll
     @DisplayName("This method restores the old content on the .txt-file.")
     public static void restoreOldFile() throws IOException {
-        oldLog.fileToLog();
+        oldLog.logToFile();
     }
 
 }
