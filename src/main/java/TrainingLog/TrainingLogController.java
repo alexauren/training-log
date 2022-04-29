@@ -15,34 +15,34 @@ import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-
 public class TrainingLogController {
 
-    @FXML 
+    @FXML
     private ListView<Workout> workoutList;
     @FXML
-    private Button addWorkoutButton, removeWorkoutButton, addExerciseButton, closeButton, saveButton, newWorkoutButton, newWorkoutButton2, exitChartButton, intensityCoachButton;
+    private Button addWorkoutButton, removeWorkoutButton, addExerciseButton, closeButton, saveButton, newWorkoutButton,
+            newWorkoutButton2, exitChartButton, intensityCoachButton;
     @FXML
     private Text totalTime, workoutInfo, errorText, errorTextNewWorkout, intensityAdvice, distanceText, distanceCount;
-    @FXML 
+    @FXML
     private TextField title, date, exercise, intensity, time, distanceInput;
-    @FXML 
+    @FXML
     private AnchorPane newWorkoutBackground, logBackground, intensityData;
-    @FXML 
+    @FXML
     private RadioButton dateButton, intensityButton, runningWorkoutButton, otherWorkoutButton;
-    @FXML 
+    @FXML
     private CategoryAxis xAxis;
-    @FXML 
+    @FXML
     private NumberAxis yAxis;
-    @FXML 
+    @FXML
     private LineChart<String, Number> intensityChart;
 
     private Log log;
     private Workout workout;
-    private boolean dateSort; 
+    private boolean dateSort;
     private boolean workoutType = true;
-    
-    @FXML 
+
+    @FXML
     private void initialize() {
         log = new Log();
         workoutInfo.setText("Add a workout or load a training log to view info.");
@@ -56,8 +56,7 @@ public class TrainingLogController {
         otherWorkoutButton.setSelected(true);
         try {
             log.fileToLog();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             errorText.setText("Error loading file.");
         }
         updateView();
@@ -69,23 +68,20 @@ public class TrainingLogController {
             distanceCount.setText(Double.toString(log.getDistanceCount()));
             log.logToFile();
             workoutList.getItems().setAll(log.getWorkoutList(dateSort));
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             workoutList.getItems().setAll(new ArrayList<>());
             totalTime.setText("0h:0m");
             distanceCount.setText("0");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             errorText.setText("Error reading file");
         }
 
-        
         workout = null;
         removeWorkoutButton.setDisable(true);
         workoutInfo.setText("Click on a workout to view it's info.");
         errorText.setStyle("#ec1818");
         errorText.setText(null);
-        errorTextNewWorkout.setText(null);   
+        errorTextNewWorkout.setText(null);
     }
 
     @FXML
@@ -109,12 +105,12 @@ public class TrainingLogController {
         distanceInput.setDisable(!b);
         runningWorkoutButton.setDisable(!b);
         otherWorkoutButton.setDisable(!b);
-        }
+    }
 
     @FXML
     private void handleCloseButton() {
         updateView();
-        newWorkoutBackground.setVisible(false);    
+        newWorkoutBackground.setVisible(false);
     }
 
     @FXML
@@ -124,21 +120,18 @@ public class TrainingLogController {
             log.logToFile();
             updateView();
             newWorkoutBackground.setVisible(false);
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             errorTextNewWorkout.setText(e.getMessage());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             errorTextNewWorkout.setText("Error with autosaving file");
         }
     }
- 
+
     private void resetExerciseInput() {
         time.clear();
         exercise.clear();
         intensity.clear();
     }
-
 
     @FXML
     private void handleWorkoutTypeButton() {
@@ -149,8 +142,7 @@ public class TrainingLogController {
             distanceInput.clear();
             newWorkoutButton2.setVisible(false);
             newWorkoutButton.setVisible(true);
-        }
-        else {
+        } else {
             workoutType = false;
             distanceText.setVisible(true);
             distanceInput.setVisible(true);
@@ -164,43 +156,40 @@ public class TrainingLogController {
         try {
             if (workoutType) {
                 workout = new OtherWorkout(title.getText(), date.getText());
-            }
-            else {
-                workout = new RunningWorkout(title.getText(), date.getText(), Double.parseDouble(distanceInput.getText()));
+            } else {
+                workout = new RunningWorkout(title.getText(), date.getText(),
+                        Double.parseDouble(distanceInput.getText()));
             }
             updateEnabledFields(false);
             errorTextNewWorkout.setText(null);
-        }
-        catch (NullPointerException | NumberFormatException e) {
+        } catch (NullPointerException | NumberFormatException e) {
             handleAddWorkout();
             errorTextNewWorkout.setText("Distance must be a number from 1-50.");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             handleAddWorkout();
             errorTextNewWorkout.setText(e.getMessage());
-        } 
-        
+        }
     }
 
-    @FXML 
+    @FXML
     private void handleAddExercise() {
         try {
-            Exercise ex = new Exercise(exercise.getText(), Integer.parseInt(time.getText()), Integer.parseInt(intensity.getText()));
+            Exercise ex = new Exercise(exercise.getText(), Integer.parseInt(time.getText()),
+                    Integer.parseInt(intensity.getText()));
             workout.addExercise(ex);
-            resetExerciseInput(); 
+            resetExerciseInput();
             errorTextNewWorkout.setText(null);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             errorTextNewWorkout.setText(e.getMessage());
         }
-    }   
+    }
 
     @FXML
     private void handleWorkoutIsPressed() {
         ShowWorkoutInfo();
         removeWorkoutButton.setDisable(false);
     }
-    
+
     private void ShowWorkoutInfo() {
         Workout tmpWorkout = workoutList.getSelectionModel().getSelectedItem();
         workoutInfo.setText(tmpWorkout.extendedToString());
@@ -218,8 +207,8 @@ public class TrainingLogController {
     private void handleWorkoutSort() {
         if (!dateButton.isSelected()) {
             dateSort = false;
-        }
-        else dateSort = true;
+        } else
+            dateSort = true;
         updateView();
     }
 
@@ -228,15 +217,15 @@ public class TrainingLogController {
         intensityData.setVisible(false);
     }
 
-    @FXML 
+    @FXML
     private void showIntensityData() {
         intensityChart.getData().clear();
         intensityData.setVisible(true);
         intensityAdvice.setText(log.getIntensityAdvice());
-            
+
         xAxis.setLabel("Date");
-        yAxis.setLabel("Intensity");
-        
+        yAxis.setLabel("Intensity (1-10)");
+
         XYChart.Series<String, Number> intensitySeries = new XYChart.Series<String, Number>();
         intensitySeries.setName("Intensity");
 

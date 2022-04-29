@@ -10,7 +10,7 @@ public class OtherWorkout extends Workout {
 
     @Override
     public void addExercise(Exercise exercise) {
-        exercises.add(exercise);        
+        exercises.add(exercise);
     }
 
     @Override
@@ -20,9 +20,9 @@ public class OtherWorkout extends Workout {
 
     @Override
     public String workoutToFile() {
-        String tmpExercises = this.getExercises().stream().map(s -> s.exerciseTofile()).collect(Collectors.joining());
+        String tmpExercises = this.getExercises().stream()
+                .map(s -> s.exerciseTofile()).collect(Collectors.joining());
         return this.getName() + "," + this.getDate() + "," + tmpExercises + "\n";
     }
 
-    
 }

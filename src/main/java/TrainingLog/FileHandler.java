@@ -21,8 +21,7 @@ public class FileHandler implements IFileHandler {
         workouts.stream().forEach(workout -> {
             try {
                 writer.write(workout.workoutToFile());
-            } 
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -50,16 +49,15 @@ public class FileHandler implements IFileHandler {
 
         if (strings.get(0).equals("Running")) {
             workout = new RunningWorkout((strings).get(1), strings.get(2), Double.parseDouble(strings.get(3)));
-            
+
             for (int i = 4; i < strings.size(); i += 3) {
                 Exercise exercise = new Exercise(strings.get(i), Integer.parseInt(strings.get(i + 1)),
                         Integer.parseInt(strings.get(i + 2)));
                 workout.addExercise(exercise);
             }
-        }
-        else {
+        } else {
             workout = new OtherWorkout((strings).get(0), strings.get(1));
-            
+
             for (int i = 2; i < strings.size(); i += 3) {
                 Exercise exercise = new Exercise(strings.get(i), Integer.parseInt(strings.get(i + 1)),
                         Integer.parseInt(strings.get(i + 2)));

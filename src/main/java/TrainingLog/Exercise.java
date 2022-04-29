@@ -1,34 +1,31 @@
 package traininglog;
 
 public class Exercise {
-    
+
     private String name;
     private int time;
     private int intensity;
-    
+
     public Exercise(String name, int time, int intensity) {
         if (isValidExercise(name, time, intensity)) {
             this.name = name;
             this.time = time;
             this.intensity = intensity;
-        }
-        else throw new IllegalArgumentException("Invalid exercise parameters.");     
+        } else
+            throw new IllegalArgumentException("Invalid exercise parameters.");
     }
 
     private boolean isValidExercise(String name, int time, int intensity) {
         if (time <= 0 || time > 180) {
             throw new IllegalArgumentException("Please enter a time between 1 and 180 minutes.");
-        }
-        else if (intensity <= 0 || intensity > 10) {
-            throw new IllegalArgumentException("Please enter an intensity between 1 and 10 minutes.");
-        }
-        else if (name == null || name.length() > 15) {
+        } else if (intensity <= 0 || intensity > 10) {
+            throw new IllegalArgumentException("Please enter an intensity between 1 and 10.");
+        } else if (name == null || name.length() > 15) {
             throw new IllegalArgumentException("Please enter a valid exercise name (1-15 chars).");
         }
         return true;
     }
 
-    
     public String getName() {
         return name;
     }
@@ -37,7 +34,6 @@ public class Exercise {
         return time;
     }
 
-    
     public int getIntensity() {
         return intensity;
     }
@@ -50,7 +46,6 @@ public class Exercise {
     public String exerciseTofile() {
         return name + "," + time + "," + intensity + ",";
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -72,7 +67,4 @@ public class Exercise {
             return false;
         return true;
     }
-
-    
-
 }

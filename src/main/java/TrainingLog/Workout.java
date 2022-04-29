@@ -40,8 +40,8 @@ public abstract class Workout {
         }
 
         String year = date.substring(6, 10);
-        if (Integer.parseInt(year) < Calendar.getInstance().get(Calendar.YEAR) - 1 
-        || Integer.parseInt(year) > Calendar.getInstance().get(Calendar.YEAR)) {
+        if (Integer.parseInt(year) < Calendar.getInstance().get(Calendar.YEAR) - 1
+                || Integer.parseInt(year) > Calendar.getInstance().get(Calendar.YEAR)) {
             return false;
         }
 
@@ -79,13 +79,15 @@ public abstract class Workout {
     public String extendedToString() {
 
         String tmpExercises = new String();
+
         for (Exercise exercise : exercises) {
             tmpExercises += exercise.toString() + "\n";
         }
+
         String tmpString = new String(
-            this.toString() +
-            "\n\n" + tmpExercises + "\n" +
-            "Total time spent: " + this.getTime() + " minutes.");
+                this.toString() +
+                        "\n\n" + tmpExercises + "\n" +
+                        "Total time spent: " + this.getTime() + " minutes.");
 
         return tmpString;
     }
@@ -107,17 +109,15 @@ public abstract class Workout {
     public static Comparator<Workout> workoutComparatorDate = (o1, o2) -> {
         if (o1.getYear() != o2.getYear()) {
             return o1.getYear() - o2.getYear();
-        } 
-        else if (o1.getMonth() != o2.getMonth()) {
+        } else if (o1.getMonth() != o2.getMonth()) {
             return o1.getMonth() - o2.getMonth();
-        } 
-        else {
+        } else {
             return o1.getDay() - o2.getDay();
-        }   
+        }
     };
 
-    public static Comparator<Workout> workoutComparatorIntensity = (o1, o2) 
-            -> (int) o1.getAvgIntensity() - (int)o2.getAvgIntensity();
+    public static Comparator<Workout> workoutComparatorIntensity = (o1, o2) -> 
+            (int) o1.getAvgIntensity() - (int) o2.getAvgIntensity();
 
     @Override
     public boolean equals(Object obj) {
@@ -146,5 +146,4 @@ public abstract class Workout {
         return true;
     }
 
-    
 }

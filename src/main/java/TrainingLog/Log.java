@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
 public class Log {
 
     private Collection<Workout> workouts = new ArrayList<Workout>();
@@ -15,8 +14,8 @@ public class Log {
     public void addWorkout(Workout workout) {
         if (workout.getExercises().size() > 0) {
             workouts.add(workout);
-        }
-        else throw new IllegalStateException("Please add at least one exercise before saving your workout.");
+        } else
+            throw new IllegalStateException("Please add at least one exercise before saving your workout.");
     }
 
     public void setWorkouts(ArrayList<Workout> workoutList) {
@@ -26,23 +25,22 @@ public class Log {
     public void removeWorkout(Workout workout) {
         if (workouts.contains(workout)) {
             workouts.remove(workout);
-        }
-        else throw new IllegalStateException("Cannot remove a workout that doesn't exist.");
+        } else
+            throw new IllegalStateException("Cannot remove a workout that doesn't exist.");
     }
 
     public String getTotalTime() {
-        totalTime = this.getWorkoutList(true).stream().mapToInt(w -> w.getTime()).sum();
+        totalTime = workouts.stream().mapToInt(w -> w.getTime()).sum();
         int hours = totalTime / 60;
         int minutes = totalTime % 60;
-        return Integer.toString(hours) + "h:" + Integer.toString(minutes) + "m"; 
+        return Integer.toString(hours) + "h:" + Integer.toString(minutes) + "m";
     }
 
     public List<Workout> getWorkoutList(boolean dateSort) {
         List<Workout> workoutsCopy = new ArrayList<Workout>(workouts);
         if (dateSort) {
             workoutsCopy.sort(Workout.workoutComparatorDate);
-        }
-        else {
+        } else {
             workoutsCopy.sort(Workout.workoutComparatorIntensity);
         }
         return workoutsCopy;
@@ -50,24 +48,26 @@ public class Log {
 
     public String getIntensityAdvice() {
         double avg = workouts.stream()
-            .mapToDouble(w -> w.getAvgIntensity()).sum() 
-            / workouts.size();
+                .mapToDouble(w -> w.getAvgIntensity()).sum()
+                / workouts.size();
         String avgString = String.format("%.2f", avg);
+
         String advice;
         if (avg > 8) {
-            advice =  "Your average training intensity is " + avgString + ". You should consider training less hard to avoid overtraining.";
-        }
-        else if (avg < 6) {
-            advice = "Your average training intensity is " + avgString + ". You should consider training harder if you want more gains.";
-        } 
-        else {
+            advice = "Your average training intensity is " + avgString
+                    + ". You should consider training less hard to avoid overtraining.";
+        } else if (avg < 6) {
+            advice = "Your average training intensity is " + avgString
+                    + ". You should consider training harder if you want more gains.";
+        } else {
             advice = "Your average training intensity is " + avgString + ", which is within the optimal range.";
         }
         return advice;
     }
 
     public double getDistanceCount() {
-         return workouts.stream().filter(w -> w instanceof RunningWorkout).mapToDouble(w -> ((RunningWorkout) w).getDistance()).sum();
+        return workouts.stream().filter(w -> w instanceof RunningWorkout)
+                .mapToDouble(w -> ((RunningWorkout) w).getDistance()).sum();
     }
 
     public void logToFile() throws IOException {
@@ -78,7 +78,6 @@ public class Log {
         this.setWorkouts(fileHandler.readFromFile());
     }
 
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -95,7 +94,5 @@ public class Log {
             return false;
         return true;
     }
-
-    
 
 }
